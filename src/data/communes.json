@@ -1,0 +1,162 @@
+[
+  {
+    "id": "09201",
+    "name": "Angol",
+    "province": "Malleco"
+  },
+  {
+    "id": "09102",
+    "name": "Carahue",
+    "province": "Cautín"
+  },
+  {
+    "id": "09121",
+    "name": "Cholchol",
+    "province": "Cautín"
+  },
+  {
+    "id": "09202",
+    "name": "Collipulli",
+    "province": "Malleco"
+  },
+  {
+    "id": "09103",
+    "name": "Cunco",
+    "province": "Cautín"
+  },
+  {
+    "id": "09203",
+    "name": "Curacautín",
+    "province": "Malleco"
+  },
+  {
+    "id": "09104",
+    "name": "Curarrehue",
+    "province": "Cautín"
+  },
+  {
+    "id": "09204",
+    "name": "Ercilla",
+    "province": "Malleco"
+  },
+  {
+    "id": "09105",
+    "name": "Freire",
+    "province": "Cautín"
+  },
+  {
+    "id": "09106",
+    "name": "Galvarino",
+    "province": "Cautín"
+  },
+  {
+    "id": "09107",
+    "name": "Gorbea",
+    "province": "Cautín"
+  },
+  {
+    "id": "09108",
+    "name": "Lautaro",
+    "province": "Cautín"
+  },
+  {
+    "id": "09109",
+    "name": "Loncoche",
+    "province": "Cautín"
+  },
+  {
+    "id": "09205",
+    "name": "Lonquimay",
+    "province": "Malleco"
+  },
+  {
+    "id": "09206",
+    "name": "Los Sauces",
+    "province": "Malleco"
+  },
+  {
+    "id": "09207",
+    "name": "Lumaco",
+    "province": "Malleco"
+  },
+  {
+    "id": "09110",
+    "name": "Melipeuco",
+    "province": "Cautín"
+  },
+  {
+    "id": "09111",
+    "name": "Nueva Imperial",
+    "province": "Cautín"
+  },
+  {
+    "id": "09112",
+    "name": "Padre las Casas",
+    "province": "Cautín"
+  },
+  {
+    "id": "09113",
+    "name": "Perquenco",
+    "province": "Cautín"
+  },
+  {
+    "id": "09114",
+    "name": "Pitrufquén",
+    "province": "Cautín"
+  },
+  {
+    "id": "09115",
+    "name": "Pucón",
+    "province": "Cautín"
+  },
+  {
+    "id": "09208",
+    "name": "Purén",
+    "province": "Malleco"
+  },
+  {
+    "id": "09209",
+    "name": "Renaico",
+    "province": "Malleco"
+  },
+  {
+    "id": "09116",
+    "name": "Saavedra",
+    "province": "Cautín"
+  },
+  {
+    "id": "09101",
+    "name": "Temuco",
+    "province": "Cautín"
+  },
+  {
+    "id": "09117",
+    "name": "Teodoro Schmidt",
+    "province": "Cautín"
+  },
+  {
+    "id": "09118",
+    "name": "Toltén",
+    "province": "Cautín"
+  },
+  {
+    "id": "09210",
+    "name": "Traiguén",
+    "province": "Malleco"
+  },
+  {
+    "id": "09211",
+    "name": "Victoria",
+    "province": "Malleco"
+  },
+  {
+    "id": "09119",
+    "name": "Vilcún",
+    "province": "Cautín"
+  },
+  {
+    "id": "09120",
+    "name": "Villarrica",
+    "province": "Cautín"
+  }
+]
