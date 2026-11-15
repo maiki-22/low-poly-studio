@@ -69,3 +69,14 @@ typescript-eslint adopte una versión corregida de forma nativa.
 
 Los archivos de `public/` se sirven públicamente: reservar esta carpeta para
 assets que puedan ser accesibles por URL.
+
+## Indicador de incendio animado
+
+El fuego creado en Blockbench está disponible en
+`/models/indicador-incendio-v01.glb`, con el clip `incendio_loop` de 1,6 segundos.
+Incluye tres llamas y dos brasas, con 308 triángulos y un peso de 19.168 bytes.
+
+El editable `.bbmodel`, las vistas previas, los datos fuente y el ayudante de
+Three.js están en [`assets/indicador-incendio-v01/`](assets/indicador-incendio-v01/LEEME.md).
+El modelo queda disponible como recurso para el front; todavía no se coloca
+ningún indicador en el mapa.

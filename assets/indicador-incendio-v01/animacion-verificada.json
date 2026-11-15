@@ -1,0 +1,11 @@
+{
+  "loader": "Three.js r129 GLTFLoader",
+  "clip": "incendio_loop",
+  "duration": 1.600000023841858,
+  "tracks": 10,
+  "loopPoseMaxMatrixError": 0,
+  "centralScaleYMin": 0.8899340101981166,
+  "centralScaleYMax": 1.1100660545402692,
+  "previewFrames": 32,
+  "previewFps": 20
+}

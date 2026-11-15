@@ -1,0 +1,41 @@
+{
+  "bytes": 19168,
+  "brotliBytes": 4442,
+  "gzipBytes": 5798,
+  "triangles": 308,
+  "vertices": 451,
+  "meshes": 5,
+  "materials": 1,
+  "textures": 0,
+  "animation": "incendio_loop",
+  "duration": 1.6,
+  "channels": 10,
+  "loopSeamsMatch": true,
+  "parts": [
+    {
+      "part": "llama_central",
+      "vertices": 239,
+      "triangles": 168
+    },
+    {
+      "part": "llama_izquierda",
+      "vertices": 86,
+      "triangles": 62
+    },
+    {
+      "part": "llama_derecha",
+      "vertices": 86,
+      "triangles": 62
+    },
+    {
+      "part": "brasa_01",
+      "vertices": 20,
+      "triangles": 8
+    },
+    {
+      "part": "brasa_02",
+      "vertices": 20,
+      "triangles": 8
+    }
+  ]
+}
