@@ -214,13 +214,7 @@ export default function Page() {
                 <FiArrowUpRight className="transition group-hover:translate-x-1 group-hover:-translate-y-1" />
               </button>
 
-              <button
-                onClick={() => router.push("/mapa#datos")}
-                className="flex items-center justify-center gap-3 rounded-lg border border-white/15 px-7 py-4 font-medium text-slate-300 transition hover:border-[#6EA3F2]/60 hover:text-white"
-              >
-                Conocer análisis
-                <FiArrowRight />
-              </button>
+            
 
             </div>
 
