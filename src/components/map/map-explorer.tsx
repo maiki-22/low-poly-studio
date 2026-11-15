@@ -11,6 +11,7 @@ import communes from "@/data/communes.json";
 import { MapViewport } from "./map-viewport";
 import { EnvironmentalPanel } from "@/features/environment/components/environmental-panel";
 import { Icon } from "@/components/ui/icon";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 export default function MapExplorer() {
   const navigation = useExplorerNavigation();
@@ -45,19 +46,23 @@ export default function MapExplorer() {
       </a>
       <h1 className="sr-only">DeHecho: explorador ambiental de La Araucanía</h1>
       <header className="explorer-header">
-        <Link className="brand" href="/" aria-label="DeHecho, inicio">
-          <Image
-            className="brand-logo"
-            src="/brand/logo-dehecho-mark.svg"
-            alt=""
-            width={52}
-            height={52}
-            priority
-          />
-          <span>
-            DeHecho<small>Explorador ambiental</small>
-          </span>
-        </Link>
+        <Link className="brand" href="/" aria-label="Volver al inicio">
+        <IoArrowBackOutline size={20} strokeWidth={2} />
+
+        <Image
+          className="brand-logo"
+          src="/brand/logo-dehecho-mark.svg"
+          alt=""
+          width={52}
+          height={52}
+          priority
+        />
+
+        <span>
+          DeHecho
+          <small>Explorador ambiental</small>
+        </span>
+      </Link>
       </header>
       <div className="territory-controls">
         <span className="control-label">Territorio</span>
