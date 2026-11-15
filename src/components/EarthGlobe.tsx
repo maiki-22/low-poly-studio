@@ -1,11 +1,11 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Globe, { GlobeMethods } from 'react-globe.gl'
 
 const ARAUCANIA = { lat: -38.74, lng: -72.6 } // Temuco / centro de la región
 
-export default function EarthGlobe({ size = 480 }: { size?: number }) {
+function GlobeCanvas({ size }: { size: number }) {
   const globeRef = useRef<GlobeMethods | undefined>(undefined)
 
   const handleReady = () => {
@@ -50,4 +50,23 @@ export default function EarthGlobe({ size = 480 }: { size?: number }) {
       labelAltitude={0.02}
     />
   )
+}
+
+export default function EarthGlobe({ size = 480 }: { size?: number }) {
+  // Con `cacheComponents`, Next.js oculta esta página con <Activity> en lugar
+  // de desmontarla. Al ocultarse, react-globe.gl destruye su escena WebGL y no
+  // puede revivirla al volver a mostrarse (el planeta queda en blanco). Por eso
+  // montamos un globo nuevo cada vez que la página vuelve a ser visible.
+  const [generation, setGeneration] = useState(0)
+  const hasBeenVisible = useRef(false)
+
+  useEffect(() => {
+    if (hasBeenVisible.current) {
+      setGeneration((value) => value + 1)
+    } else {
+      hasBeenVisible.current = true
+    }
+  }, [])
+
+  return <GlobeCanvas key={generation} size={size} />
 }
