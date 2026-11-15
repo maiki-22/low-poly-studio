@@ -1,3 +1,9 @@
+import { formatNumber } from "./environment.ts";
+
+export function formatWildfireCount(count: number): string {
+  return `${formatNumber(count, 0)} ${count === 1 ? "wildfire" : "wildfires"}`;
+}
+
 export type FireSeason = {
   id: string;
   start: string;
@@ -20,7 +26,7 @@ export function seasonCount(season: FireSeason, territoryId: string): number | n
 }
 
 export function decodeWildfires(value: unknown): WildfireData {
-  const invalid = () => new Error("No se pudieron leer los conteos de incendios.");
+  const invalid = () => new Error("We couldn’t read the wildfire counts.");
   if (!value || typeof value !== "object") throw invalid();
   const data = value as WildfireData;
   const validCount = (count: unknown) => count === null || (typeof count === "number" && Number.isSafeInteger(count) && count >= 0);

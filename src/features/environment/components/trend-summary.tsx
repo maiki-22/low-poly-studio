@@ -3,6 +3,7 @@ import { Icon } from "@/components/ui/icon";
 import {
   formatNumber,
   formatSigned,
+  formatUnit,
   periodLabel,
   TREND_LABELS,
   VARIABLES,
@@ -22,7 +23,7 @@ export function TrendSummary({
     trend.status === "evidence_increasing" ||
     trend.status === "evidence_decreasing";
   return (
-    <section className="trend-summary" aria-label="Tendencia ambiental">
+    <section className="trend-summary" aria-label="Environmental trend">
       <div className="trend-topline">
         <span className={`evidence-badge${evidence ? " has-evidence" : ""}`}>
           <Icon
@@ -44,54 +45,54 @@ export function TrendSummary({
         <>
           <p className="trend-magnitude">
             {formatSigned(trend.slope)}
-            <span>{trend.unit}</span>
+            <span>{formatUnit(trend.unit)}</span>
           </p>
         </>
       ) : (
         <p className="coverage-message">
-          La cobertura de esta variable no es suficiente para estimar una
-          tendencia. Puedes explorar las otras variables de esta comuna.
+          Data coverage is insufficient to estimate a trend for this variable.
+          You can explore the other variables for this municipality.
         </p>
       )}
       <DetailDialog
-        title="Evidencia estadística"
+        title="Statistical evidence"
         description={`${territoryName} · ${variable.label}`}
-        trigger="Ver evidencia"
+        trigger="View evidence"
         triggerClassName="evidence-trigger"
       >
         <div className="evidence-content">
           <p>{variable.definition}</p>
           {covered && trend.low !== null && trend.high !== null && (
             <p>
-              Intervalo marginal del 95 %:{" "}
+              Marginal 95% confidence interval:{" "}
               <strong>
-                {formatNumber(trend.low)} a {formatNumber(trend.high)}
+                {formatNumber(trend.low)} to {formatNumber(trend.high)}
               </strong>{" "}
-              {trend.unit}.
+              {formatUnit(trend.unit)}.
             </p>
           )}
           <p>
-            {trend.nUsed} meses utilizados. Período de estimación:{" "}
+            {trend.nUsed} months used. Analysis period:{" "}
             {periodLabel(trend.periodStart, trend.periodEnd)}.
           </p>
           {trend.pHolm !== null && (
             <p>
-              p corregido por Holm:{" "}
-              {trend.pHolm < 0.001 ? "< 0,001" : formatNumber(trend.pHolm, 3)}.
-              La etiqueta de evidencia incorpora esta corrección; el intervalo
-              es marginal.
+              Holm-adjusted p-value:{" "}
+              {trend.pHolm < 0.001 ? "< 0.001" : formatNumber(trend.pHolm, 3)}.{" "}
+              The evidence label accounts for this adjustment; the confidence
+              interval is marginal.
             </p>
           )}
           {trend.variable === "relative_humidity_2m_pct" && (
             <p>
-              El cambio se expresa en puntos porcentuales, no como porcentaje de
-              disminución.
+              Change is expressed in percentage points rather than as a
+              percentage decrease.
             </p>
           )}
           <p>
-            El rango del gráfico no modifica esta tendencia. Las estimaciones
-            ambientales representan áreas de una malla; no son mediciones
-            puntuales en cada comuna.
+            Changing the chart range does not change this trend estimate.
+            Environmental estimates represent grid-cell areas rather than
+            point measurements within each municipality.
           </p>
         </div>
       </DetailDialog>

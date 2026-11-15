@@ -14,15 +14,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   icons: { icon: "/icon.svg" },
-  title: "DeHecho — Explora La Araucanía",
+  title: "DeHecho — Explore La Araucanía",
   description:
-    "Explora diez años de condiciones ambientales de La Araucanía: series mensuales, tendencias y evidencia por comuna.",
+    "Explore a decade of environmental conditions in La Araucanía: monthly time series, trends and evidence for each municipality.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="es"
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

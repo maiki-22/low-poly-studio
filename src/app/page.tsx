@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import {
   FiActivity,
   FiArrowUpRight,
-  FiArrowRight,
   FiMapPin,
   FiGlobe,
   FiTrendingUp,
@@ -33,53 +32,53 @@ export default function Page() {
   const variables = [
     {
       icon: <FiAlertTriangle />,
-      name: "Incendios forestales",
+      name: "Wildfires",
       description:
-        "Incidencia de incendios en La Araucanía, según las estadísticas de CONAF.",
-      category: "INCENDIOS",
-      unit: "incidencia",
+        "Wildfire occurrence in La Araucanía, based on CONAF records.",
+      category: "WILDFIRES",
+      unit: "fire counts",
       wide: true,
     },
     {
       icon: <FiThermometer />,
-      name: "Temperatura",
-      description: "Temperatura del aire a 2 m y máxima mensual.",
-      category: "ATMÓSFERA",
+      name: "Temperature",
+      description: "Air temperature at 2 m and monthly maximum temperature.",
+      category: "ATMOSPHERE",
       unit: "°C",
     },
     {
       icon: <FiDroplet />,
-      name: "Humedad del aire",
-      description: "Humedad relativa, humedad específica y punto de rocío a 2 m.",
-      category: "ATMÓSFERA",
+      name: "Atmospheric moisture",
+      description: "Relative humidity, specific humidity and dew point at 2 m.",
+      category: "ATMOSPHERE",
       unit: "%, kg/kg, °C",
     },
     {
       icon: <FiWind />,
-      name: "Viento",
-      description: "Velocidad y componentes este-oeste y norte-sur a 10 m.",
-      category: "ATMÓSFERA",
+      name: "Wind",
+      description: "Wind speed and east–west and north–south components at 10 m.",
+      category: "ATMOSPHERE",
       unit: "m/s",
     },
     {
       icon: <FiLayers />,
-      name: "Suelo",
-      description: "Humedad y temperatura del suelo entre 0 y 10 cm de profundidad.",
-      category: "SUPERFICIE",
+      name: "Soil conditions",
+      description: "Water content and temperature in the top 10 cm of soil.",
+      category: "LAND SURFACE",
       unit: "kg/m², °C",
     },
     {
       icon: <FiCloudRain />,
-      name: "Precipitación",
-      description: "Lluvia acumulada en cada mes.",
-      category: "HIDROLOGÍA",
+      name: "Precipitation",
+      description: "Total precipitation for each month.",
+      category: "HYDROLOGY",
       unit: "mm",
     },
     {
       icon: <FiCloud />,
-      name: "Aerosoles",
-      description: "Profundidad óptica a 550 nm: cuántas partículas, como humo, hay en el aire.",
-      category: "ATMÓSFERA",
+      name: "Aerosols",
+      description: "Aerosol optical depth at 550 nm: an indicator of airborne particles, such as smoke.",
+      category: "ATMOSPHERE",
       unit: "AOD",
     },
   ];
@@ -88,28 +87,28 @@ export default function Page() {
     {
       number: "01",
       icon: <FiGlobe />,
-      title: "Explora el territorio",
+      title: "Explore the region",
       description:
-        "Selecciona una zona de La Araucanía y descubre qué variables ambientales puedes investigar.",
-      action: "Explorar mapa",
+        "Choose a municipality in La Araucanía and explore the environmental variables available for it.",
+      action: "Explore the map",
       route: "/mapa",
     },
     {
       number: "02",
       icon: <FiSearch />,
-      title: "Selecciona variables",
+      title: "Choose a variable",
       description:
-        "Consulta variables provenientes de misiones satelitales y modelos de ciencias terrestres.",
-      action: "Ver variables",
+        "Explore environmental variables derived from satellite observations and Earth science models.",
+      action: "View variables",
       route: "/variables",
     },
     {
       number: "03",
       icon: <FiBarChart2 />,
-      title: "Analiza tendencias",
+      title: "Examine trends",
       description:
-        "Visualiza series temporales, calcula tasas de cambio y evalúa la significancia estadística.",
-      action: "Comenzar análisis",
+        "View time series, examine rates of change and assess the statistical evidence.",
+      action: "Explore trends",
       route: "/mapa#datos",
     },
   ];
@@ -142,16 +141,16 @@ export default function Page() {
 
           <div className="hidden items-center gap-9 text-sm text-slate-500 md:flex">
             <a href="#inicio" className="transition hover:text-white">
-              Inicio
+              Home
             </a>
             <a href="#variables" className="transition hover:text-white">
               Variables
             </a>
             <a href="#fuentes" className="transition hover:text-white">
-              Fuentes
+              Data sources
             </a>
             <a href="#proyecto" className="transition hover:text-white">
-              Sobre el Proyecto
+              About the project
             </a>
           </div>
 
@@ -180,28 +179,28 @@ export default function Page() {
 
             <div className="mb-8 flex items-center gap-3 text-[11px] font-medium tracking-[0.25em] text-[#6EA3F2]">
               <span className="h-px w-8 bg-[#6EA3F2]" />
-              OBSERVACIÓN · CIENCIA · TERRITORIO
+              OBSERVATION · SCIENCE · OUR PLANET
             </div>
 
             <h1 className="text-5xl font-medium leading-[1.12] tracking-tight sm:text-6xl lg:text-7xl">
-              La Tierra está
+              Earth is
               <br />
-              cambiando.
+              changing.
               <br />
               <span className="font-semibold text-[#6EA3F2]">
-                Descubre cómo.
+                Discover how.
               </span>
             </h1>
 
             <p className="mt-8 max-w-xl text-base leading-8 text-slate-400 sm:text-lg">
-              Explora datos satelitales y variables ambientales para
-              identificar tendencias y comprender los cambios que
-              ocurren en nuestra región de la araucanía.
+              Explore satellite data and environmental variables to
+              identify trends and understand how La Araucanía
+              is changing.
             </p>
 
             <p className="mt-5 flex items-center gap-2 text-sm text-slate-500">
               <FiMapPin className="text-[#6EA3F2]" />
-              Región de La Araucanía, Chile.
+              La Araucanía Region, Chile.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -210,7 +209,7 @@ export default function Page() {
                 onClick={() => router.push("/mapa")}
                 className="group flex items-center justify-center gap-3 rounded-lg bg-[#0033A0] px-7 py-4 font-semibold text-white transition hover:bg-[#1749B8]"
               >
-                Comenzar Investigación
+                Start exploring
                 <FiArrowUpRight className="transition group-hover:translate-x-1 group-hover:-translate-y-1" />
               </button>
 
@@ -224,16 +223,16 @@ export default function Page() {
                 <div className="flex items-center gap-2 text-[#6EA3F2]">
                   <FiDatabase size={16} />
                   <span className="text-xs font-medium uppercase tracking-wider">
-                    Información
+                    Data
                   </span>
                 </div>
 
                 <p className="mt-2 text-sm text-white">
-                  Datos científicos
+                  Scientific data
                 </p>
 
                 <p className="mt-1 text-xs text-slate-500">
-                  Observaciones y modelos
+                  Observations and models
                 </p>
               </div>
 
@@ -241,16 +240,16 @@ export default function Page() {
                 <div className="flex items-center gap-2 text-[#6EA3F2]">
                   <FiTrendingUp size={16} />
                   <span className="text-xs font-medium uppercase tracking-wider">
-                    Investigación
+                    Research
                   </span>
                 </div>
 
                 <p className="mt-2 text-sm text-white">
-                  Análisis temporal
+                  Change over time
                 </p>
 
                 <p className="mt-1 text-xs text-slate-500">
-                  Tendencias y significancia
+                  Trends and statistical evidence
                 </p>
               </div>
 
@@ -277,7 +276,7 @@ export default function Page() {
               {/* Etiqueta superior */}
               <div className="pointer-events-none absolute right-0 top-5 rounded-lg border border-white/10 bg-[#0A111C]/90 px-4 py-3 backdrop-blur-sm">
                 <p className="text-[10px] tracking-widest text-slate-500">
-                  ÁREA DE ESTUDIO
+                  STUDY AREA
                 </p>
                 <p className="mt-1 text-sm font-medium text-slate-200">
                   La Araucanía, CL
@@ -287,11 +286,11 @@ export default function Page() {
               {/* Etiqueta inferior */}
               <div className="pointer-events-none absolute bottom-6 left-0 rounded-lg border border-white/10 bg-[#0A111C]/90 px-4 py-3">
                 <p className="text-[10px] tracking-widest text-slate-500">
-                  ENFOQUE CIENTÍFICO
+                  SCIENTIFIC APPROACH
                 </p>
                 <p className="mt-1 flex items-center gap-2 text-xs text-[#6EA3F2]">
                   <FiActivity />
-                  Observación terrestre
+                  Earth observation
                 </p>
               </div>
 
@@ -316,16 +315,16 @@ export default function Page() {
 
             <p className="mb-5 flex items-center gap-3 text-[11px] font-medium tracking-[0.2em] text-[#6EA3F2]">
               <span className="h-px w-7 bg-[#6EA3F2]" />
-              VARIABLES AMBIENTALES
+              ENVIRONMENTAL VARIABLES
             </p>
 
             <h2 className="text-3xl font-medium tracking-tight sm:text-5xl">
-              Observa los distintos sistemas de la Tierra.
+              Explore Earth’s interconnected systems.
             </h2>
 
             <p className="mt-5 leading-7 text-slate-400">
-              Investiga variables ambientales y estudia su evolución
-              a lo largo del tiempo en distintas zonas de La Araucanía.
+              Explore environmental variables and how they change
+              over time across La Araucanía.
             </p>
 
           </div>
@@ -383,18 +382,18 @@ export default function Page() {
 
             <p className="mb-5 flex items-center gap-3 text-[11px] font-medium tracking-[0.2em] text-[#6EA3F2]">
               <span className="h-px w-7 bg-[#6EA3F2]" />
-              FUENTES DE DATOS
+              DATA SOURCES
             </p>
 
             <h2 className="text-3xl font-medium tracking-tight sm:text-5xl">
-              De dónde vienen los datos.
+              Where the data comes from.
             </h2>
 
             <p className="mt-5 leading-7 text-slate-400">
-              Trabajamos con observaciones de satélites y modelos de la NASA,
-              que consultamos con Giovanni, y con estadísticas oficiales de
-              incendios forestales de CONAF. Cada fuente cubre un periodo y una escala distintos, y eso
-              determina qué tan lejos en el tiempo puedes mirar.
+              We use NASA satellite observations and model outputs accessed
+              through Giovanni, together with official wildfire records from
+              CONAF. Each source has its own time span and spatial resolution,
+              which determine the detail and history you can explore.
             </p>
 
           </div>
@@ -415,7 +414,7 @@ export default function Page() {
 
                 <div>
                   <p className="text-xs text-slate-500">
-                    Acceso y análisis de datos de la NASA
+                    Access to NASA data and analysis
                   </p>
 
                   <h3 className="mt-1 font-semibold text-white">
@@ -423,8 +422,8 @@ export default function Page() {
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-slate-400">
-                    Plataforma para explorar y visualizar datos de ciencias
-                    de la Tierra, con productos como MERRA-2.
+                    A platform for exploring and visualizing Earth science
+                    data, including products such as MERRA-2.
                   </p>
                 </div>
 
@@ -436,7 +435,7 @@ export default function Page() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 self-start text-sm font-medium text-[#9DBFF5] transition hover:text-white"
               >
-                Ver fuente
+                View source
                 <FiArrowUpRight />
               </a>
 
@@ -453,16 +452,16 @@ export default function Page() {
 
                 <div>
                   <p className="text-xs text-slate-500">
-                    Datos de incendios forestales
+                    Wildfire records
                   </p>
 
                   <h3 className="mt-1 font-semibold text-white">
-                    Corporación Nacional Forestal (CONAF)
+                    Chile’s National Forestry Corporation (CONAF)
                   </h3>
 
                   <p className="mt-1 text-sm leading-6 text-slate-400">
-                    Estadísticas históricas: ocurrencia nacional de incendios
-                    forestales, 2014-2023.
+                    Historical records of wildfire occurrence
+                    published by CONAF.
                   </p>
                 </div>
 
@@ -474,7 +473,7 @@ export default function Page() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 self-start text-sm font-medium text-[#9DBFF5] transition hover:text-white"
               >
-                Ver fuente
+                View source
                 <FiArrowUpRight />
               </a>
 
@@ -483,7 +482,7 @@ export default function Page() {
           </div>
 
           <p className="mt-6 text-xs text-slate-600">
-            Las resoluciones son aproximadas y varían según el producto.
+            Spatial resolutions are approximate and vary by product.
           </p>
 
         </div>
@@ -499,16 +498,16 @@ export default function Page() {
           <div className="mb-14">
             <p className="mb-5 flex items-center gap-3 text-[11px] font-medium tracking-[0.2em] text-[#6EA3F2]">
               <span className="h-px w-7 bg-[#6EA3F2]" />
-              METODOLOGÍA DE INVESTIGACIÓN
+              HOW TO EXPLORE
             </p>
 
             <h2 className="text-3xl font-medium sm:text-5xl">
-              De la observación al descubrimiento.
+              From observation to discovery.
             </h2>
 
             <p className="mt-5 max-w-xl leading-7 text-slate-400">
-              Una herramienta para explorar datos, detectar cambios
-              y comprender las tendencias ambientales de nuestro territorio.
+              A tool for exploring data, identifying changes
+              and understanding environmental trends in the region.
             </p>
           </div>
 
@@ -556,23 +555,23 @@ export default function Page() {
           <div className="relative z-10 max-w-2xl">
 
             <p className="mb-5 text-[11px] font-medium tracking-[0.2em] text-[#6EA3F2]">
-              CIENCIA · DATOS · TERRITORIO
+              SCIENCE · DATA · EXPLORATION
             </p>
 
             <h2 className="text-4xl font-medium leading-tight sm:text-5xl">
-              Comprender nuestro entorno comienza con observarlo.
+              Understanding our environment starts with observation.
             </h2>
 
             <p className="mt-6 leading-7 text-slate-400">
-              Explora los cambios ambientales de La Araucanía
-              y descubre qué nos dicen los datos sobre nuestro planeta.
+              Explore environmental change in La Araucanía
+              and discover what the data tells us about our planet.
             </p>
 
             <button
               onClick={() => router.push("/mapa")}
               className="mt-9 flex items-center gap-3 rounded-lg bg-[#0033A0] px-7 py-4 font-semibold text-white transition hover:bg-[#1749B8]"
             >
-              Comenzar investigación
+              Start exploring
               <FiArrowUpRight />
             </button>
 
@@ -591,11 +590,11 @@ export default function Page() {
           </span>
 
           <p className="text-center text-xs text-slate-500">
-            Explorando las tendencias ambientales de La Araucanía.
+            Exploring environmental trends in La Araucanía.
           </p>
 
           <p className="text-xs text-slate-600">
-            NASA Space Apps Challenge · Proyecto independiente
+            NASA Space Apps Challenge · Independent project
           </p>
 
         </div>

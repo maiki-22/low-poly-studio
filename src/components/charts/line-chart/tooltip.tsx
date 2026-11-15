@@ -17,7 +17,7 @@ export function LineChartTooltip() {
             <span className="sr-only">{row.label}: </span>
             <strong>
               {row.values[chart.activeIndex] == null
-                ? "Sin datos"
+                ? "No data"
                 : chart.formatValue(row.values[chart.activeIndex]!)}
             </strong>
           </span>

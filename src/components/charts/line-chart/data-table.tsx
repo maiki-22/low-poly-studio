@@ -23,13 +23,13 @@ function DataTable({
       className="table-scroll"
       tabIndex={0}
       role="region"
-      aria-label={`Tabla: ${label}`}
+      aria-label={`Table: ${label}`}
     >
       <table>
         <caption className="sr-only">{label}</caption>
         <thead>
           <tr>
-            <th scope="col">Mes</th>
+            <th scope="col">Month</th>
             {series.map((row) => (
               <th key={row.id} scope="col">
                 {row.label}
@@ -44,7 +44,7 @@ function DataTable({
               {series.map((row) => (
                 <td key={row.id}>
                   {row.values[index] == null
-                    ? "Sin datos"
+                    ? "No data"
                     : formatValue(row.values[index]!)}
                 </td>
               ))}
@@ -60,9 +60,9 @@ export const LineChartDataTable = memo(function LineChartDataTable(
 ) {
   return (
     <DetailDialog
-      title="Datos mensuales"
+      title="Monthly data"
       description={props.label}
-      trigger="Ver datos en tabla"
+      trigger="View data table"
       triggerClassName="chart-data-trigger"
     >
       <DataTable {...props} />

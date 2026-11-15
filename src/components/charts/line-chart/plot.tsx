@@ -3,6 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { AnimatedPath } from "./animated-path";
 import { useLineChart } from "./context";
+import { UI_LOCALE } from "@/lib/locale";
 import {
   areaPath,
   chartGeometry,
@@ -11,7 +12,7 @@ import {
   PADDING,
 } from "./model";
 
-const tickFormatter = new Intl.NumberFormat("es-CL", {
+const tickFormatter = new Intl.NumberFormat(UI_LOCALE, {
   maximumFractionDigits: 1,
 });
 
@@ -54,7 +55,7 @@ export function LineChartPlot() {
       className="line-chart-plot"
       tabIndex={0}
       role="group"
-      aria-label={`${chart.label}. Usa las flechas izquierda y derecha para recorrer los meses; Inicio y Fin para los extremos.`}
+      aria-label={`${chart.label}. Use the left and right arrow keys to browse months, and Home or End to jump to the first or last month.`}
       onKeyDown={(event) => {
         if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key))
           return;
@@ -92,7 +93,7 @@ export function LineChartPlot() {
         aria-labelledby={`${id}-title`}
       >
         <title id={`${id}-title`}>
-          {chart.label}. Los datos también están disponibles en la tabla.
+          {chart.label}. The data is also available in the table.
         </title>
 
         {geometry.ticks.map((value, index) => (

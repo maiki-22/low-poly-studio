@@ -11,7 +11,7 @@ import {
 
 type Row = Record<string, unknown>;
 const invalid = () =>
-  new Error("La respuesta de datos no tiene el formato esperado.");
+  new Error("The data response has an unexpected format.");
 function record(value: unknown): Row {
   if (!value || typeof value !== "object" || Array.isArray(value))
     throw invalid();

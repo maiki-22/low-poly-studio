@@ -101,7 +101,7 @@ export class ResourceCache {
             error:
               cause instanceof Error
                 ? cause
-                : new Error("No pudimos cargar los datos."),
+                : new Error("We couldn’t load the data."),
           };
         },
       )

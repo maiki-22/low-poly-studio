@@ -18,7 +18,7 @@ export function createVolcanoLandmarks(source: Object3D, terrain: TerrainModel) 
   const assetBounds = new Box3().setFromObject(source);
   const assetSize = assetBounds.getSize(new Vector3());
   const assetWidth = Math.max(assetSize.x, assetSize.z);
-  if (!Number.isFinite(assetWidth) || assetWidth <= 0 || assetSize.y <= 0) throw new Error("El modelo de volcán no tiene una base válida.");
+  if (!Number.isFinite(assetWidth) || assetWidth <= 0 || assetSize.y <= 0) throw new Error("The volcano model has an invalid base.");
   const ray = new Raycaster();
   const surfaces = terrain.regions.map((region) => region.mesh);
   const ownedGeometry = new Set<BufferGeometry>();
@@ -27,7 +27,7 @@ export function createVolcanoLandmarks(source: Object3D, terrain: TerrainModel) 
     ray.set(new Vector3(projected.x, terrain.bounds.max.y + 10, projected.z), new Vector3(0, -1, 0));
     const hit = ray.intersectObjects(surfaces, false)[0];
     if (!hit || hit.object.userData.cut !== site.anchorCommuneId) {
-      throw new Error(`La ubicación de ${site.name} no coincide con el terreno georreferenciado.`);
+      throw new Error(`The location of ${site.name} does not match the georeferenced terrain.`);
     }
     const owner = hit.object;
     const presentation = PRESENTATION[site.id];
@@ -43,7 +43,7 @@ export function createVolcanoLandmarks(source: Object3D, terrain: TerrainModel) 
       if (cached !== undefined) return cached;
       ray.set(new Vector3(x, terrain.bounds.max.y + 10, z), new Vector3(0, -1, 0));
       const ground = ray.intersectObject(owner, false)[0];
-      if (!ground) throw new Error(`La base de ${site.name} sobresale de su comuna de apoyo.`);
+      if (!ground) throw new Error(`The base of ${site.name} extends beyond its supporting municipality.`);
       heights.set(key, ground.point.y);
       return ground.point.y;
     }

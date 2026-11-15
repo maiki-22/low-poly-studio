@@ -51,7 +51,7 @@ export function DetailDialog({
             onClick={() => dialog.current?.close()}
           >
             <Icon name="close" />
-            Cerrar
+            Close
           </button>
         </header>
         <div className="detail-dialog-body">{open ? children : null}</div>

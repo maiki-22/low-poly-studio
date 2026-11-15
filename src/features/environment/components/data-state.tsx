@@ -8,10 +8,10 @@ export function DataError({
   return (
     <div className="data-state data-error" role="alert">
       <span className="state-symbol">!</span>
-      <strong>No pudimos cargar esta información</strong>
+      <strong>We couldn’t load this information</strong>
       <p>{message}</p>
       <button type="button" className="soft-button" onClick={onRetry}>
-        Volver a intentar
+        Try again
       </button>
     </div>
   );
@@ -22,13 +22,13 @@ export function DataLoading() {
     <div
       className="data-skeleton"
       role="status"
-      aria-label="Cargando datos ambientales"
+      aria-label="Loading environmental data"
     >
       <span className="skeleton skeleton-pill" />
       <span className="skeleton skeleton-number" />
       <span className="skeleton skeleton-copy" />
       <div className="skeleton skeleton-chart" />
-      <span className="sr-only">Cargando datos ambientales…</span>
+      <span className="sr-only">Loading environmental data…</span>
     </div>
   );
 }

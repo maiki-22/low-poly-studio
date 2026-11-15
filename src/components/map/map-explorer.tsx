@@ -15,7 +15,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { EnvironmentalTimeline } from "@/features/environment/components/environmental-timeline";
 import { FireTimeline } from "@/features/environment/components/fire-timeline";
 import { useWildfires } from "@/features/environment/application/use-wildfires";
-import { formatNumber } from "@/features/environment/domain/environment";
+import { formatWildfireCount } from "@/features/environment/domain/wildfires";
 import { DEFAULT_FIRE_MINIMUM } from "@/features/environment/application/wildfire-display";
 
 export default function MapExplorer() {
@@ -53,14 +53,14 @@ export default function MapExplorer() {
   return (
     <main className="explorer">
       <a className="skip-link" href="#mapa">
-        Saltar al mapa
+        Skip to map
       </a>
       <a className="skip-link" href="#datos">
-        Saltar a los datos
+        Skip to data
       </a>
-      <h1 className="sr-only">DeHecho: explorador ambiental de La Araucanía</h1>
+      <h1 className="sr-only">DeHecho: La Araucanía environmental explorer</h1>
       <header className="explorer-header">
-        <Link className="brand" href="/" aria-label="Volver al inicio">
+        <Link className="brand" href="/" aria-label="Back to home">
         <IoArrowBackOutline size={20} strokeWidth={2} />
 
         <Image
@@ -74,13 +74,13 @@ export default function MapExplorer() {
 
         <span>
           DeHecho
-          <small>Explorador ambiental</small>
+          <small>Environmental explorer</small>
         </span>
       </Link>
       </header>
       <div className="territory-tools">
         <div className="territory-controls">
-          <span className="control-label">Territorio</span>
+          <span className="control-label">Area</span>
           <TerritoryPicker
             value={selectedId ?? "09"}
             onChange={(id) => setSelectedId(id === "09" ? null : id)}
@@ -89,7 +89,7 @@ export default function MapExplorer() {
           {selectedId && (
             <button
               type="button"
-              aria-label="Volver a la región"
+              aria-label="View the whole region"
               onClick={() => {
                 setSelectedId(null);
               }}
@@ -101,9 +101,9 @@ export default function MapExplorer() {
       </div>
       <EnvironmentalPanel
         timelineView={<>
-        <div className="timeline-mode" role="group" aria-label="Contenido de la línea de tiempo">
-          <button type="button" aria-pressed={timeline === "fires"} onClick={() => setTimeline("fires")}>Incendios por temporada</button>
-          <button type="button" aria-pressed={timeline === "environment"} onClick={() => setTimeline("environment")}>Clima mensual</button>
+        <div className="timeline-mode" role="group" aria-label="Timeline content">
+          <button type="button" aria-pressed={timeline === "fires"} onClick={() => setTimeline("fires")}>Wildfire seasons</button>
+          <button type="button" aria-pressed={timeline === "environment"} onClick={() => setTimeline("environment")}>Monthly climate</button>
         </div>
         {timeline === "environment" ? <>
           <EnvironmentalTimeline
@@ -114,34 +114,34 @@ export default function MapExplorer() {
           />
           {fireData && <p className="monthly-fire-count">
             {monthlyFires?.value != null
-              ? `${formatNumber(monthlyFires.value, 0)} incendios en la región este mes`
-              : "Sin conteo regional de incendios para este mes"}
+              ? `${formatWildfireCount(monthlyFires.value)} recorded across the region this month`
+              : "No regional wildfire count available for this month"}
           </p>}
         </> : fireData ? (
           <FireTimeline data={fireData} index={seasonIndex} onChange={setSeasonIndex} territoryId={navigation.territoryId}
             minimum={fireMinimum} onMinimumChange={setFireMinimum} />
         ) : <div className="environmental-timeline" role="status">
           {wildfires.status === "error" ? <>
-            <p>No pudimos cargar los incendios.</p>
-            <button type="button" onClick={wildfires.retry}>Volver a intentar</button>
-          </> : "Cargando incendios…"}
+            <p>We couldn’t load the wildfire counts.</p>
+            <button type="button" onClick={wildfires.retry}>Try again</button>
+          </> : "Loading wildfire counts…"}
         </div>}
         {timeline === "fires" && season && <details className="fire-map-legend">
-          <summary>Cómo leer las llamas · CONAF</summary>
+          <summary>How to read the flames · CONAF</summary>
           <div>
-            <strong>Incendios · {season.id.replace("-", "–")}</strong>
-            <span>Una llama por comuna con al menos {fireMinimum} incendios en la temporada. Mayor tamaño = más incendios.</span>
-            <span>Una comuna sin llama puede tener registros por debajo de este mínimo visual. Los conteos completos siguen en la tabla.</span>
-            <span>Totales de julio a junio; posiciones simbólicas dentro de cada comuna.</span>
-            <span>Sin coordenadas de los focos ni actividad en tiempo real.</span>
-            <a href={`https://github.com/eziocard/DeHecho/tree/${fireData?.source.revision}/data/conaf`} target="_blank" rel="noreferrer">Fuente: conteos CONAF</a>
+            <strong>Wildfires · {season.id.replace("-", "–")}</strong>
+            <span>One flame per municipality with at least {formatWildfireCount(fireMinimum)} that season. Larger flames mean higher counts.</span>
+            <span>A municipality without a flame may have records below this display threshold. The table includes all counts.</span>
+            <span>July–June totals, shown at symbolic locations within each municipality.</span>
+            <span>These symbols show historical counts, without individual ignition coordinates or live incident information.</span>
+            <a href={`https://github.com/eziocard/DeHecho/tree/${fireData?.source.revision}/data/conaf`} target="_blank" rel="noreferrer">Source: CONAF wildfire counts</a>
           </div>
         </details>}
         </>}
         territoryView={
           <section
             className="territory-section"
-            aria-label="Exploración territorial"
+            aria-label="Regional map explorer"
           >
             <MapViewport selectedId={selectedId} onSelect={setSelectedId}
               fireSeason={timeline === "fires" ? season : null} fireMaximum={maximum} fireMinimum={fireMinimum} />
@@ -153,10 +153,10 @@ export default function MapExplorer() {
                     <strong>{selected.name}</strong> · {selected.province}
                   </>
                 ) : (
-                  "Selecciona una de las 32 comunas"
+                  "Select one of the 32 municipalities"
                 )}
               </span>
-              <span className="map-keyboard-hint">Flechas para explorar</span>
+              <span className="map-keyboard-hint">Use arrow keys to explore</span>
             </div>
           </section>
         }

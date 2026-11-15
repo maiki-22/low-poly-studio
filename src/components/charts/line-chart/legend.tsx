@@ -5,7 +5,7 @@ import { useLineChart } from "./context";
 export function LineChartLegend() {
   const chart = useLineChart();
   return (
-    <div className="chart-legend" aria-label="Series del gráfico">
+    <div className="chart-legend" aria-label="Chart series">
       {chart.series.map((row) => {
         const hidden = chart.hidden.includes(row.id);
         return (

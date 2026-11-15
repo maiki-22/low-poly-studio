@@ -5,14 +5,13 @@ import { Component, memo, useCallback, useState, type ReactNode } from "react";
 import communes from "@/data/communes.json";
 import { VOLCANOES } from "@/data/volcanoes";
 import type { HoveredCommune } from "./types";
-import type { FireSeason } from "@/features/environment/domain/wildfires";
-import { formatNumber } from "@/features/environment/domain/environment";
+import { formatWildfireCount, type FireSeason } from "@/features/environment/domain/wildfires";
 
 const MapScene = dynamic(() => import("./map-scene"), {
   ssr: false,
   loading: () => (
     <div className="map-loading" role="status">
-      Preparando el mapa…
+      Preparing the map…
     </div>
   ),
 });
@@ -29,9 +28,9 @@ class MapErrorBoundary extends Component<
     if (this.state.failed)
       return (
         <div className="map-loading map-error" role="alert">
-          <strong>No pudimos cargar el mapa 3D.</strong>
+          <strong>We couldn’t load the 3D map.</strong>
           <button onClick={() => window.location.reload()}>
-            Volver a intentar
+            Try again
           </button>
         </div>
       );
@@ -79,7 +78,7 @@ export const MapViewport = memo(function MapViewport({
       className="map-stage"
       id="mapa"
       tabIndex={0}
-      aria-label="Mapa interactivo de La Araucanía"
+      aria-label="Interactive map of La Araucanía"
       aria-describedby="map-instructions"
       onKeyDown={(event) => {
         if (event.key === "Escape") {
@@ -110,10 +109,10 @@ export const MapViewport = memo(function MapViewport({
       }}
     >
       <p id="map-instructions" className="sr-only">
-        Haz clic en una comuna para seleccionarla y en el fondo para limpiar la
-        selección. Con el teclado, usa las flechas para seleccionar comunas y
-        Escape para limpiar.
-        El mapa incluye representaciones de los volcanes Villarrica, Llaima y Lonquimay.
+        Click a municipality to select it, or click the background to clear the
+        selection. Use the arrow keys to select municipalities and
+        Escape to clear the selection.
+        The map includes representations of Villarrica, Llaima and Lonquimay volcanoes.
       </p>
       <MapErrorBoundary>
         <MapScene
@@ -134,8 +133,8 @@ export const MapViewport = memo(function MapViewport({
         >
           {hoveredCommune.name}
           <span>{hoveredCommune.province}</span>
-          {hoveredVolcano && <span>Volcán {hoveredVolcano.name}</span>}
-          {fireSeason && <span>{fireSeason.counts[hoveredCommune.id] == null ? "Sin datos" : `${formatNumber(fireSeason.counts[hoveredCommune.id]!, 0)} incendios`} · {fireSeason.id}</span>}
+          {hoveredVolcano && <span>{hoveredVolcano.name} volcano</span>}
+          {fireSeason && <span>{fireSeason.counts[hoveredCommune.id] == null ? "No data" : formatWildfireCount(fireSeason.counts[hoveredCommune.id]!)} · {fireSeason.id}</span>}
         </div>
       )}
       <p
@@ -145,8 +144,8 @@ export const MapViewport = memo(function MapViewport({
         aria-atomic="true"
       >
         {selected
-          ? `${selected.name}, provincia de ${selected.province}. Comuna seleccionada.`
-          : "La Araucanía. Vista regional seleccionada."}
+          ? `${selected.name}, ${selected.province} Province. Municipality selected.`
+          : "La Araucanía. Regional view selected."}
       </p>
     </div>
   );

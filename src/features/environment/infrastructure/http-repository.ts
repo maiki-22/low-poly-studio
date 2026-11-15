@@ -17,8 +17,8 @@ export class DataRequestError extends Error {
   constructor(status: number) {
     super(
       status === 503 || status === 502 || status === 504
-        ? "Estos datos no están disponibles en este momento."
-        : "No pudimos consultar los datos seleccionados.",
+        ? "This data is currently unavailable."
+        : "We couldn’t retrieve the selected data.",
     );
     this.status = status;
   }

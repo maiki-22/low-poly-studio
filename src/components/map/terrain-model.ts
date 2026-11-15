@@ -72,7 +72,7 @@ function buildCommuneBody(mesh: Mesh, material: MeshStandardMaterial) {
   const source = mesh.geometry;
   const positions = source.getAttribute("position");
   const index = source.getIndex();
-  if (!index) throw new Error("El terreno debe tener geometría indexada.");
+  if (!index) throw new Error("The terrain geometry must be indexed.");
   let baseY = Infinity;
   for (let i = 0; i < positions.count; i++) baseY = Math.min(baseY, positions.getY(i));
   const pointKey = (i: number) => `${positions.getX(i)},${positions.getZ(i)}`;
@@ -125,7 +125,7 @@ function buildCommuneBody(mesh: Mesh, material: MeshStandardMaterial) {
     const ax = positions.getX(edge.a), az = positions.getZ(edge.a);
     const bx = positions.getX(edge.b), bz = positions.getZ(edge.b);
     const ay = heights.get(pointKey(edge.a))!, by = heights.get(pointKey(edge.b))!;
-    if (!(ay > baseY && by > baseY)) throw new Error("No se encontró el relieve de un borde comunal.");
+    if (!(ay > baseY && by > baseY)) throw new Error("No terrain surface was found along a municipality boundary.");
     const middle = Math.min(baseY + bandHeight, ay, by);
     const swatch = 121 + (segment++ % 2);
     const a = vertex(ax, ay, az, swatch), b = vertex(bx, by, bz, swatch);
@@ -173,7 +173,7 @@ export function createTerrainModel(source: Object3D): TerrainModel {
     if (object.userData.kind === "decoracion") decorations.push(object);
   });
 
-  if (communes.length !== 32) throw new Error("El mapa debe contener 32 comunas.");
+  if (communes.length !== 32) throw new Error("The map must contain 32 municipalities.");
 
   // Frame the terrain itself, so adding trees retains the established camera.
   root.updateMatrixWorld(true);
@@ -214,7 +214,7 @@ export function createTerrainModel(source: Object3D): TerrainModel {
   const owners = new Map(regions.map((region) => [region.id, region.mesh]));
   for (const decoration of decorations) {
     const owner = owners.get(String(decoration.userData.comunaCut));
-    if (!owner) throw new Error(`Decoración sin comuna: ${decoration.name}`);
+    if (!owner) throw new Error(`Decoration without a municipality: ${decoration.name}`);
     // attach preserves the world transform, including the asset's quantization.
     // Trees, rocks and shrubs now follow their commune through every animation.
     owner.attach(decoration);

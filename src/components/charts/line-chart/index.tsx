@@ -37,7 +37,7 @@ export function LineChart({
   const visible = candidates.length ? candidates : series;
   const effectiveHidden = candidates.length ? hidden : [];
   if (!categories.length || !series.length)
-    return <p className="empty-chart">No hay observaciones para mostrar.</p>;
+    return <p className="empty-chart">No observations to display.</p>;
   return (
     <LineChartContext.Provider
       value={{

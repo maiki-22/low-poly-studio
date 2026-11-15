@@ -26,6 +26,11 @@ use the `NEXT_PUBLIC_` prefix. The browser requests `/api/dehecho/*` from its
 own origin, so the backend does not need to enable CORS for this connection.
 
 The landing page is available at `/`, and the environmental explorer at `/mapa`.
+The interface is in English, with English dates, number formatting and display
+units. Place names retain their original spelling. Published CONAF finding
+templates are translated for display while preserving the response's numeric
+values, statistical qualifications and regional scope; source data and API
+identifiers remain unchanged.
 The explorer's information panel initially loads regional relative humidity.
 Selecting a municipality on the map, with the keyboard, or through the selector
 updates the time series and trend. The range buttons only change the chart's

@@ -6,6 +6,7 @@ import { environmentRepository } from "../infrastructure/http-repository";
 import {
   formatMonth,
   formatNumber,
+  formatUnit,
   VARIABLES,
   type VariableId,
 } from "../domain/environment";
@@ -39,8 +40,8 @@ export function EnvironmentalTimeline({
   const loading = data.catalog.status === "idle" ||
     data.catalog.status === "loading" || data.series.status === "loading";
   const value = point?.value == null
-    ? "Sin datos"
-    : `${formatNumber(point.value)} ${series?.unit}`;
+    ? "No data"
+    : `${formatNumber(point.value)} ${formatUnit(series?.unit ?? VARIABLES[variable].unit)}`;
 
   const month = point?.start ?? null;
   useEffect(() => { onMonthChange?.(month); }, [month, onMonthChange]);
@@ -58,17 +59,17 @@ export function EnvironmentalTimeline({
   }, [playing, selectedIndex, lastIndex, points.length]);
 
   return (
-    <section className="environmental-timeline" aria-label="Línea de tiempo climática" aria-busy={loading}>
+    <section className="environmental-timeline" aria-label="Monthly climate timeline" aria-busy={loading}>
       <div className="timeline-heading">
         <label htmlFor={id}>{VARIABLES[variable].label}</label>
         <output htmlFor={id} data-has-value={!error && !loading && point?.value != null || undefined}>
-          {error ? "Sin conexión" : loading ? "Cargando…" : point ? value : "Sin observaciones"}
+          {error ? "Connection unavailable" : loading ? "Loading…" : point ? value : "No observations"}
         </output>
       </div>
       <div className="timeline-track">
         <button
           type="button"
-          aria-label={playing ? "Pausar evolución mensual" : "Reproducir evolución mensual"}
+          aria-label={playing ? "Pause monthly timeline" : "Play monthly timeline"}
           aria-pressed={playing}
           disabled={points.length < 2}
           onClick={() => {
@@ -86,7 +87,7 @@ export function EnvironmentalTimeline({
           step={1}
           value={selectedIndex}
           disabled={!point || !!error}
-          aria-valuetext={point ? `${formatMonth(point.start, true)}: ${value}` : "Sin observaciones"}
+          aria-valuetext={point ? `${formatMonth(point.start, true)}: ${value}` : "No observations"}
           onChange={(event) => {
             setPlaying(false);
             setIndex(Number(event.target.value));
@@ -96,7 +97,7 @@ export function EnvironmentalTimeline({
       <div className="timeline-dates">
         <span>{points[0]?.start.slice(0, 4) ?? "2014"}</span>
         {!error && (
-          <span>{point ? formatMonth(point.start, true) : "Evolución mensual"}</span>
+          <span>{point ? formatMonth(point.start, true) : "Monthly timeline"}</span>
         )}
         <span>{points.at(-1)?.start.slice(0, 4) ?? "2023"}</span>
       </div>

@@ -21,7 +21,7 @@ export function useLineChart(): ChartContext {
   const context = useContext(LineChartContext);
   if (!context)
     throw new Error(
-      "Los componentes del gráfico deben estar dentro de LineChart.",
+      "Chart components must be rendered inside LineChart.",
     );
   return context;
 }

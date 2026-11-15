@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "node --test scripts/verify-terrain.mjs scripts/verify-environment.mjs scripts/verify-resource-cache.mjs scripts/verify-explorer-navigation.mjs scripts/verify-wildfires.mjs scripts/verify-volcanoes.mjs",
+    "test": "node --test scripts/verify-terrain.mjs scripts/verify-environment.mjs scripts/verify-resource-cache.mjs scripts/verify-explorer-navigation.mjs scripts/verify-wildfires.mjs scripts/verify-volcanoes.mjs scripts/verify-english-ui.mjs",
     "data:conaf": "node scripts/import-conaf.mjs",
     "verify:api": "node scripts/verify-live-api.mjs"
   },

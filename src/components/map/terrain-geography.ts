@@ -13,7 +13,7 @@ export const TERRAIN_GEOGRAPHY = {
 /** Geographic coordinates to the original GLB's coordinates, before framing. */
 export function geographicTerrainPosition(longitude: number, latitude: number): Vector3 {
   if (!Number.isFinite(longitude) || !Number.isFinite(latitude) || Math.abs(longitude) > 180 || Math.abs(latitude) >= 85.051129) {
-    throw new Error("Coordenadas fuera del rango de la proyección del terreno.");
+    throw new Error("Coordinates are outside the terrain projection range.");
   }
   const radius = 6378137;
   const east = radius * longitude * Math.PI / 180;

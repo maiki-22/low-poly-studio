@@ -6,7 +6,7 @@ import { DEFAULT_FIRE_MINIMUM, meetsFireMinimum } from "../../features/environme
 export function communeFireAnchor(mesh: Mesh): Vector3 {
   const positions = mesh.geometry.getAttribute("position");
   const indices = mesh.geometry.getIndex();
-  if (!indices) throw new Error("El terreno debe estar indexado.");
+  if (!indices) throw new Error("The terrain geometry must be indexed.");
   const a = new Vector3(), b = new Vector3(), c = new Vector3();
   let bestArea = 0;
   const anchor = new Vector3();
@@ -20,7 +20,7 @@ export function communeFireAnchor(mesh: Mesh): Vector3 {
       anchor.copy(a).add(b).add(c).multiplyScalar(1 / 3);
     }
   }
-  if (!bestArea) throw new Error("No se encontró una superficie para el indicador.");
+  if (!bestArea) throw new Error("No surface was found for the wildfire marker.");
   return anchor;
 }
 
@@ -34,7 +34,7 @@ export function fireMarkerScale(count: number | null | undefined, maximum: numbe
 
 export function createWildfireMarkers(source: Object3D, clips: AnimationClip[], terrain: TerrainModel) {
   const clip = clips.find((animation) => animation.name === "incendio_loop");
-  if (!clip) throw new Error("El indicador no tiene la animación incendio_loop.");
+  if (!clip) throw new Error("The wildfire marker is missing the incendio_loop animation.");
   const root = new Group();
   root.name = "indicadores_incendios_comunales";
   const markers = terrain.regions.map((region) => {

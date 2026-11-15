@@ -193,13 +193,13 @@ export default memo(function MapScene(props: SceneProps) {
         aria-busy={loading || !rendererReady}
         fallback={
           <div className="map-loading" role="alert">
-            Tu navegador no tiene WebGL disponible para mostrar el mapa 3D.
+            WebGL is unavailable in your browser, so the 3D map cannot be displayed.
           </div>
         }
         onPointerMissed={(event) => {
           if (event.type === "click") props.onSelect(null);
         }}
-        aria-label="Relieve 3D. Haz clic en una comuna para seleccionarla."
+        aria-label="3D terrain. Click a municipality to select it."
       >
         <hemisphereLight
           args={[
@@ -226,7 +226,7 @@ export default memo(function MapScene(props: SceneProps) {
       </Canvas>
       {rendererReady && loading && (
         <div className="map-loading" role="status">
-          Cargando relieve…
+          Loading terrain…
         </div>
       )}
     </>

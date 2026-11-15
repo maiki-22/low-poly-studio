@@ -45,7 +45,7 @@ function SeriesTile({
   return (
     <section
       className="chart-tile panel-surface panel-data"
-      aria-label="Serie ambiental"
+      aria-label="Environmental time series"
       aria-busy={
         data.catalog.status === "loading" || data.series.status === "loading"
       }
@@ -59,14 +59,14 @@ function SeriesTile({
         <DataLoading />
       ) : !data.canRead ? (
         <div className="data-state">
-          <strong>Datos no disponibles</strong>
-          <p>Prueba otra variable o territorio.</p>
+          <strong>Data unavailable</strong>
+          <p>Try another variable or area.</p>
           <button
             type="button"
             className="soft-button"
             onClick={data.catalog.retry}
           >
-            Actualizar
+            Refresh
           </button>
         </div>
       ) : data.series.status === "error" ? (
@@ -78,8 +78,8 @@ function SeriesTile({
         <DataLoading />
       ) : !current?.points.length ? (
         <div className="data-state">
-          <strong>Sin observaciones</strong>
-          <p>Selecciona otra variable o territorio.</p>
+          <strong>No observations</strong>
+          <p>Select another variable or area.</p>
         </div>
       ) : (
         <>
@@ -100,16 +100,16 @@ function SeriesTile({
               />
               <span>
                 {isCommune
-                  ? "Comparar con La Araucanía"
-                  : "Elige una comuna para comparar"}
+                  ? "Compare with La Araucanía"
+                  : "Select a municipality to compare"}
               </span>
             </label>
             {data.comparison.status === "loading" && (
-              <span role="status">Cargando…</span>
+              <span role="status">Loading…</span>
             )}
             {data.comparison.status === "error" && (
               <button type="button" onClick={data.comparison.retry}>
-                Reintentar comparación
+                Retry comparison
               </button>
             )}
           </div>
@@ -163,16 +163,16 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
       style={
         { "--variable-color": VARIABLES[view.variable].color } as CSSProperties
       }
-      aria-label={`Datos ambientales de ${view.territoryName}`}
+      aria-label={`Environmental data for ${view.territoryName}`}
       data-updating={updating || undefined}
       aria-busy={updating || undefined}
     >
       <div
         className="variable-selector panel-surface"
         role="group"
-        aria-label="Variable ambiental"
+        aria-label="Environmental variable"
       >
-        <h2>Variable ambiental</h2>
+        <h2>Environmental variable</h2>
         {VARIABLE_IDS.map((id) => (
           <button
             key={id}
@@ -194,7 +194,7 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
       {territoryView}
       {updating && (
         <p className="selection-update" role="status">
-          Actualizando a {territoryName}…
+          Updating data for {territoryName}…
         </p>
       )}
       <div className="data-column">
@@ -207,7 +207,7 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
         >
           <header className="panel-header">
             <h2 id="panel-title">{view.territoryName}</h2>
-            <span>{view.territoryId === REGION_ID ? "Región" : "Comuna"}</span>
+            <span>{view.territoryId === REGION_ID ? "Region" : "Municipality"}</span>
           </header>
           <p className="active-variable">{VARIABLES[view.variable].label}</p>
           {display.trend.status === "ready" && display.trend.data ? (
@@ -217,32 +217,32 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
             />
           ) : display.trend.status === "error" ? (
             <div className="inline-error" role="alert">
-              Tendencia no disponible.{" "}
+              Trend unavailable.{" "}
               <button type="button" onClick={display.trend.retry}>
-                Reintentar
+                Try again
               </button>
             </div>
           ) : (
             <p className="inline-status" role="status">
               {display.catalog.status === "error"
-                ? "Sin conexión con los datos"
+                ? "Data connection unavailable"
                 : display.trend.status === "idle" &&
                     display.catalog.status === "ready"
-                  ? "Sin tendencia publicada"
-                  : "Consultando tendencia…"}
+                  ? "No published trend"
+                  : "Loading trend…"}
             </p>
           )}
         </section>
         {current && <ObservationSummary series={current} />}
         <DetailDialog
-          title="Análisis regional de incendios"
-          description={`${VARIABLES[view.variable].label} · Toda La Araucanía`}
+          title="Regional wildfire analysis"
+          description={`${VARIABLES[view.variable].label} · All of La Araucanía`}
           triggerClassName="fire-details panel-surface"
           trigger={
             <>
               <Icon name="fire" />
               <span>
-                Incendios<small>Toda La Araucanía</small>
+                Wildfires<small>All of La Araucanía</small>
               </span>
               <Icon name="arrow" />
             </>
@@ -251,7 +251,7 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
           {display.fireAvailable ? (
             <FireContext variable={view.variable} repository={repository} />
           ) : (
-            <p className="inline-status">Análisis no disponible.</p>
+            <p className="inline-status">Analysis unavailable.</p>
           )}
         </DetailDialog>
       </div>

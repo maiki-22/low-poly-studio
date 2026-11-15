@@ -9,6 +9,7 @@ import {
 import {
   formatMonth,
   formatNumber,
+  formatUnit,
   VARIABLES,
   type EnvironmentalSeries,
 } from "../domain/environment";
@@ -45,20 +46,20 @@ export const EnvironmentalChart = memo(function EnvironmentalChart({
     [series, comparison, range, territoryName, chartColor],
   );
   const formatValue = useCallback(
-    (value: number) => `${formatNumber(value)} ${series.unit}`,
+    (value: number) => `${formatNumber(value)} ${formatUnit(series.unit)}`,
     [series.unit],
   );
   const hasData = series.points.some((point) => point.value !== null);
   return (
-    <section className="environmental-chart" aria-label="Serie mensual">
+    <section className="environmental-chart" aria-label="Monthly time series">
       <div className="chart-heading">
-        <h3>Serie mensual</h3>
-        <div className="range-controls" aria-label="Rango visible del gráfico">
+        <h3>Monthly time series</h3>
+        <div className="range-controls" aria-label="Visible chart range">
           {(
             [
-              ["all", "Todo el período"],
-              ["60", "5 años"],
-              ["12", "1 año"],
+              ["all", "Full period"],
+              ["60", "5 years"],
+              ["12", "1 year"],
             ] as const
           ).map(([value, label]) => (
             <button
@@ -80,7 +81,7 @@ export const EnvironmentalChart = memo(function EnvironmentalChart({
               ? [0, 100]
               : undefined
           }
-          label={`${variable.label} en ${territoryName}`}
+          label={`${variable.label} in ${territoryName}`}
           formatCategory={formatMonth}
           formatValue={formatValue}
         />
@@ -89,16 +90,16 @@ export const EnvironmentalChart = memo(function EnvironmentalChart({
           <p className="state-symbol" aria-hidden="true">
             —
           </p>
-          <strong>Sin datos con cobertura suficiente</strong>
+          <strong>Insufficient data coverage</strong>
           <p>
-            La humedad del suelo de esta comuna está excluida por calidad. Las
-            otras variables siguen disponibles.
+            Soil moisture for this municipality is excluded because of data
+            quality. Other variables are still available.
           </p>
         </div>
       )}
       <p className="sr-only">
-        Datos mensuales. La tendencia mantiene su período completo de
-        estimación.
+        Monthly data. The trend estimate always uses the full
+        analysis period.
       </p>
     </section>
   );

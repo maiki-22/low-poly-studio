@@ -44,7 +44,7 @@ desktop.on("request", (request) => {
 try {
   await desktop.goto(base, { waitUntil: "domcontentloaded" });
   await desktop.waitForFunction(() =>
-    document.querySelector(".trend-magnitude")?.textContent.includes("9,34"),
+    document.querySelector(".trend-magnitude")?.textContent.includes("9.34"),
   );
   await desktop.waitForFunction(
     () => document.querySelector('[data-map-ready="true"]'),
@@ -62,7 +62,7 @@ try {
   });
   await selectTerritory(desktop, "09101");
   await desktop.waitForFunction(() =>
-    document.querySelector(".trend-magnitude")?.textContent.includes("10,21"),
+    document.querySelector(".trend-magnitude")?.textContent.includes("10.21"),
   );
   assert.equal(await desktop.locator("#panel-title").innerText(), "Temuco");
   assert.equal(
@@ -73,7 +73,7 @@ try {
   );
   const beforeComparison = dataRequests.length;
   await desktop
-    .getByLabel("Comparar con La Araucanía", { exact: true })
+    .getByLabel("Compare with La Araucanía", { exact: true })
     .check();
   await desktop.locator(".chart-legend").waitFor();
   assert.equal(await desktop.locator(".chart-legend button").count(), 2);
@@ -87,81 +87,81 @@ try {
     .filter({ hasText: "Temuco" })
     .click();
   await desktop
-    .getByLabel("Comparar con La Araucanía", { exact: true })
+    .getByLabel("Compare with La Araucanía", { exact: true })
     .uncheck();
   assert.ok(
     (await desktop.locator(".line-chart-plot svg path[stroke]").count()) > 0,
   );
-  await desktop.getByRole("button", { name: "1 año", exact: true }).click();
+  await desktop.getByRole("button", { name: "1 year", exact: true }).click();
   await desktop
-    .getByRole("button", { name: "Ver datos en tabla", exact: true })
+    .getByRole("button", { name: "View data table", exact: true })
     .click();
   await desktop
-    .getByRole("dialog", { name: "Datos mensuales", exact: true })
+    .getByRole("dialog", { name: "Monthly data", exact: true })
     .locator("tbody tr")
     .first()
     .waitFor();
   assert.equal(
     await desktop
-      .getByRole("dialog", { name: "Datos mensuales", exact: true })
+      .getByRole("dialog", { name: "Monthly data", exact: true })
       .locator("tbody tr")
       .count(),
     12,
   );
   assert.equal(await desktop.locator(".trend-period").innerText(), "2014–2023");
   await desktop
-    .getByRole("dialog", { name: "Datos mensuales", exact: true })
-    .getByRole("button", { name: "Cerrar", exact: true })
+    .getByRole("dialog", { name: "Monthly data", exact: true })
+    .getByRole("button", { name: "Close", exact: true })
     .click();
   await desktop.locator(".line-chart-plot").focus();
   await desktop.keyboard.press("Home");
-  assert.match(await desktop.locator(".chart-readout").innerText(), /ene 2023/);
+  assert.match(await desktop.locator(".chart-readout").innerText(), /Jan 2023/);
   await desktop.keyboard.press("ArrowRight");
-  assert.match(await desktop.locator(".chart-readout").innerText(), /feb 2023/);
+  assert.match(await desktop.locator(".chart-readout").innerText(), /Feb 2023/);
   await desktop.keyboard.press("End");
-  assert.match(await desktop.locator(".chart-readout").innerText(), /dic 2023/);
+  assert.match(await desktop.locator(".chart-readout").innerText(), /Dec 2023/);
   check(
     "Temuco: comparación, leyenda, 12 meses y navegación por teclado; tendencia conservada",
   );
   await desktop
-    .getByLabel("Comparar con La Araucanía", { exact: true })
+    .getByLabel("Compare with La Araucanía", { exact: true })
     .check();
   await desktop.locator(".chart-legend").waitFor();
   await desktop
-    .getByRole("button", { name: "Todo el período", exact: true })
+    .getByRole("button", { name: "Full period", exact: true })
     .click();
   await desktop.locator(".data-column").evaluate((el) => (el.scrollTop = 0));
   await desktop.screenshot({
     path: `${out}/temuco-comparacion.png`,
     fullPage: true,
   });
-  await desktop.getByRole("button", { name: /Incendios/ }).click();
+  await desktop.locator(".fire-details").click();
   await desktop.locator(".association-value").waitFor();
   await desktop
     .getByRole("dialog", {
-      name: "Análisis regional de incendios",
+      name: "Regional wildfire analysis",
       exact: true,
     })
-    .getByRole("button", { name: "Cerrar", exact: true })
+    .getByRole("button", { name: "Close", exact: true })
     .click();
   await desktop
-    .getByRole("button", { name: "Precipitación", exact: true })
+    .getByRole("button", { name: "Precipitation", exact: true })
     .click();
-  await desktop.getByRole("button", { name: /Incendios/ }).click();
+  await desktop.locator(".fire-details").click();
   await desktop.waitForFunction(() =>
-    document.querySelector(".association-value")?.textContent.includes("1,73"),
+    document.querySelector(".association-value")?.textContent.includes("1.73"),
   );
   assert.match(
     await desktop.locator(".regional-notice").innerText(),
-    /toda La Araucanía/,
+    /all of La Araucanía/,
   );
   assert.match(
     await desktop.locator(".evidence-badge").innerText(),
-    /Evidencia insuficiente/,
+    /Insufficient evidence/,
   );
   await desktop
     .getByRole("dialog", {
-      name: "Análisis regional de incendios",
+      name: "Regional wildfire analysis",
       exact: true,
     })
     .screenshot({ path: `${out}/incendios-regionales.png` });
@@ -170,24 +170,24 @@ try {
   );
   await desktop
     .getByRole("dialog", {
-      name: "Análisis regional de incendios",
+      name: "Regional wildfire analysis",
       exact: true,
     })
-    .getByRole("button", { name: "Cerrar", exact: true })
+    .getByRole("button", { name: "Close", exact: true })
     .click();
   await selectTerritory(desktop, "09116");
   await desktop
-    .getByRole("button", { name: "Humedad del suelo", exact: true })
+    .getByRole("button", { name: "Soil moisture", exact: true })
     .click();
   await desktop.locator(".coverage-state").waitFor();
   assert.match(
     await desktop.locator(".coverage-state").innerText(),
-    /cobertura suficiente/,
+    /Insufficient data coverage/,
   );
   assert.equal(await desktop.locator(".trend-magnitude").count(), 0);
   assert.equal(await desktop.locator(".line-chart-plot").count(), 0);
   await desktop
-    .getByRole("button", { name: "Humedad del aire", exact: true })
+    .getByRole("button", { name: "Relative humidity", exact: true })
     .click();
   await desktop.locator(".trend-magnitude").waitFor();
   check(
@@ -260,7 +260,7 @@ try {
     } else await route.continue();
   });
   await desktop
-    .getByRole("button", { name: "Temperatura", exact: true })
+    .getByRole("button", { name: "Air temperature", exact: true })
     .click();
   await desktop.locator(".panel-data .data-error").waitFor();
   assert.equal(
@@ -269,7 +269,7 @@ try {
   );
   await desktop
     .locator(".panel-data .data-error")
-    .getByRole("button", { name: "Volver a intentar" })
+    .getByRole("button", { name: "Try again" })
     .click();
   await desktop.locator(".line-chart").waitFor();
   await desktop.unroute("**/api/dehecho/series?*");
@@ -296,7 +296,7 @@ try {
   );
   await selectTerritory(mobile, "09101");
   await mobile.waitForFunction(() =>
-    document.querySelector(".trend-magnitude")?.textContent.includes("10,21"),
+    document.querySelector(".trend-magnitude")?.textContent.includes("10.21"),
   );
   await mobile.waitForFunction(() =>
     document.querySelector('[data-map-ready="true"]'),

@@ -16,7 +16,7 @@ export async function proxyDehecho(
   fetcher: typeof fetch = fetch,
 ): Promise<Response> {
   if (!Object.hasOwn(QUERIES, resource))
-    return error(404, "unknown_resource", "Consulta no disponible.");
+    return error(404, "unknown_resource", "This query is unavailable.");
   const incoming = new URL(request.url).searchParams;
   if (
     [...incoming.keys()].some(
@@ -27,7 +27,7 @@ export async function proxyDehecho(
     return error(
       422,
       "invalid_parameters",
-      "Parámetros de consulta no válidos.",
+      "Invalid query parameters.",
     );
   }
   try {
@@ -48,7 +48,7 @@ export async function proxyDehecho(
       return error(
         502,
         "invalid_response",
-        "No se pudo leer la respuesta del servicio de datos.",
+        "We couldn’t read the response from the data service.",
       );
     return Response.json(await upstream.json(), {
       status: upstream.status,
@@ -59,7 +59,7 @@ export async function proxyDehecho(
     return error(
       timeout ? 504 : 502,
       timeout ? "upstream_timeout" : "upstream_unavailable",
-      "No se pudo conectar con el servicio de datos.",
+      "We couldn’t connect to the data service.",
     );
   }
 }

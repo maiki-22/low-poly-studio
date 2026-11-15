@@ -1,6 +1,7 @@
 import {
   formatMonth,
   formatNumber,
+  formatUnit,
   type EnvironmentalSeries,
 } from "../domain/environment";
 
@@ -15,21 +16,21 @@ export function ObservationSummary({
     <>
       <section
         className="observation-tile panel-surface"
-        aria-label="Último mes registrado"
+        aria-label="Latest recorded month"
       >
         <span className="tile-label">
-          {last ? formatMonth(last.start) : "Último mes"}
+          {last ? formatMonth(last.start) : "Latest month"}
         </span>
         <p className="observation-value">
           {last?.value == null ? "—" : formatNumber(last.value)}
-          <span>{series.unit}</span>
+          <span>{formatUnit(series.unit)}</span>
         </p>
       </section>
       <section
         className="observation-tile panel-surface"
-        aria-label="Meses con datos"
+        aria-label="Months with data"
       >
-        <span className="tile-label">Meses con datos</span>
+        <span className="tile-label">Months with data</span>
         <p className="observation-value">
           {valid}
           <span>/ {series.points.length}</span>

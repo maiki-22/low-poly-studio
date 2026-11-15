@@ -1,38 +1,40 @@
+import { UI_LOCALE } from "../../../lib/locale.ts";
+
 export const VARIABLES = {
   relative_humidity_2m_pct: {
-    label: "Humedad del aire",
-    shortLabel: "Aire",
-    definition: "Humedad relativa del aire a 2 metros de altura.",
+    label: "Relative humidity",
+    shortLabel: "Humidity",
+    definition: "Relative humidity of the air at 2 meters above the ground.",
     unit: "%",
-    trendUnit: "pp por década",
+    trendUnit: "percentage points per decade",
     color: "#287c70",
     symbol: "humidity",
   },
   temperature_2m_c: {
-    label: "Temperatura",
-    shortLabel: "Temperatura",
-    definition: "Temperatura media del aire a 2 metros de altura.",
+    label: "Air temperature",
+    shortLabel: "Temperature",
+    definition: "Mean air temperature at 2 meters above the ground.",
     unit: "°C",
-    trendUnit: "°C por década",
+    trendUnit: "°C per decade",
     color: "#a45b39",
     symbol: "temperature",
   },
   precipitation_mm: {
-    label: "Precipitación",
-    shortLabel: "Lluvia",
-    definition: "Precipitación acumulada durante cada mes.",
-    unit: "mm/mes",
-    trendUnit: "mm/mes por década",
+    label: "Precipitation",
+    shortLabel: "Precipitation",
+    definition: "Total precipitation accumulated during each month.",
+    unit: "mm/month",
+    trendUnit: "mm/month per decade",
     color: "#377b9f",
     symbol: "rain",
   },
   soil_moisture_0_10cm_kgm2: {
-    label: "Humedad del suelo",
-    shortLabel: "Suelo",
+    label: "Soil moisture",
+    shortLabel: "Soil",
     definition:
-      "Agua contenida en la capa superficial del suelo, de 0 a 10 centímetros.",
+      "Water content in the top 10 centimeters of soil.",
     unit: "kg/m²",
-    trendUnit: "kg/m² por década",
+    trendUnit: "kg/m² per decade",
     color: "#867045",
     symbol: "soil",
   },
@@ -110,20 +112,20 @@ export interface EnvironmentRepository {
 }
 
 export const TREND_LABELS: Record<TrendStatus, string> = {
-  evidence_increasing: "Aumento con evidencia",
-  evidence_decreasing: "Descenso con evidencia",
-  uncertain_trend: "Evidencia insuficiente",
-  insufficient_coverage: "Cobertura insuficiente",
+  evidence_increasing: "Evidence of an increase",
+  evidence_decreasing: "Evidence of a decrease",
+  uncertain_trend: "Insufficient evidence",
+  insufficient_coverage: "Insufficient coverage",
 };
 
 const numberFormatters = new Map<number, Intl.NumberFormat>();
 const monthFormatters = {
-  short: new Intl.DateTimeFormat("es-CL", {
+  short: new Intl.DateTimeFormat(UI_LOCALE, {
     month: "short",
     year: "numeric",
     timeZone: "UTC",
   }),
-  long: new Intl.DateTimeFormat("es-CL", {
+  long: new Intl.DateTimeFormat(UI_LOCALE, {
     month: "long",
     year: "numeric",
     timeZone: "UTC",
@@ -133,7 +135,7 @@ const monthFormatters = {
 export function formatNumber(value: number, decimals = 2): string {
   let formatter = numberFormatters.get(decimals);
   if (!formatter) {
-    formatter = new Intl.NumberFormat("es-CL", {
+    formatter = new Intl.NumberFormat(UI_LOCALE, {
       maximumFractionDigits: decimals,
     });
     numberFormatters.set(decimals, formatter);
@@ -147,8 +149,17 @@ export function formatSigned(value: number): string {
 
 export function formatMonth(value: string, long = false): string {
   return monthFormatters[long ? "long" : "short"]
-    .format(new Date(`${value.slice(0, 7)}-01T00:00:00Z`))
-    .replace(" de ", " ");
+    .format(new Date(`${value.slice(0, 7)}-01T00:00:00Z`));
+}
+
+/** Translate display units without changing the upstream scientific data. */
+export function formatUnit(unit: string): string {
+  return unit
+    .replaceAll("puntos porcentuales", "percentage points")
+    .replaceAll("pp por década", "percentage points per decade")
+    .replaceAll("por década", "per decade")
+    .replaceAll("/década", " per decade")
+    .replaceAll("/mes", "/month");
 }
 
 export function periodLabel(start: string, end: string): string {

@@ -9,13 +9,14 @@ import {
 } from "react";
 import communes from "@/data/communes.json";
 import { Icon } from "@/components/ui/icon";
+import { UI_LOCALE } from "@/lib/locale";
 
 const options = [
-  { id: "09", name: "Toda La Araucanía", province: "Región" },
+  { id: "09", name: "All of La Araucanía", province: "Region" },
   ...communes,
 ];
 const normalize = (value: string) =>
-  value.normalize("NFD").replace(/\p{M}/gu, "").toLocaleLowerCase("es");
+  value.normalize("NFD").replace(/\p{M}/gu, "").toLocaleLowerCase(UI_LOCALE);
 
 export function TerritoryPicker({
   value,
@@ -117,7 +118,7 @@ export function TerritoryPicker({
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={open ? "territory-menu" : undefined}
-        aria-label={`Territorio: ${selected.name}`}
+        aria-label={`Area: ${selected.name}`}
         data-value={value}
         onKeyDown={(event) => {
           if (event.key === "ArrowDown" && !open) {
@@ -137,7 +138,7 @@ export function TerritoryPicker({
           id="territory-menu"
           className="territory-menu"
           role="dialog"
-          aria-label="Elegir territorio"
+          aria-label="Choose an area"
           style={placement}
           onBlur={(event) => {
             if (!event.currentTarget.contains(event.relatedTarget))
@@ -153,13 +154,13 @@ export function TerritoryPicker({
         >
           <label className="territory-search">
             <Icon name="search" />
-            <span className="sr-only">Buscar territorio</span>
+            <span className="sr-only">Search areas</span>
             <input
               ref={search}
-              name="buscar-territorio"
+              name="search-area"
               type="search"
               value={query}
-              placeholder="Busca una comuna…"
+              placeholder="Search municipalities…"
               autoComplete="off"
               role="combobox"
               aria-expanded="true"
@@ -205,7 +206,7 @@ export function TerritoryPicker({
             className="territory-list"
             id="territory-list"
             role="listbox"
-            aria-label="Territorios disponibles"
+            aria-label="Available areas"
           >
             {filtered.map((option, index) => (
               <button
@@ -230,14 +231,14 @@ export function TerritoryPicker({
               </button>
             ))}
             {!filtered.length && (
-              <p className="territory-empty">No encontramos esa comuna.</p>
+              <p className="territory-empty">No matching municipality found.</p>
             )}
           </div>
           <p className="territory-result-count" role="status">
             {filtered.length}{" "}
             {filtered.length === 1
-              ? "territorio disponible"
-              : "territorios disponibles"}
+              ? "area available"
+              : "areas available"}
           </p>
         </div>
       )}
