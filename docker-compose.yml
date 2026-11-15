@@ -1,0 +1,41 @@
+# Stack completo de DeHecho: API FastAPI + frontend Next.js.
+#
+# La API se construye desde el repositorio hermano ../DeHecho (que ya trae su
+# propio Dockerfile). El frontend consume la API por la red interna de Compose,
+# por lo que la API no se publica al host.
+#
+#   docker compose up --build -d
+#   docker compose logs -f
+#   docker compose down
+#
+# Variables opcionales (se pueden definir en un .env junto a este archivo):
+#   WEB_PORT         puerto del host para el frontend (por defecto 3000)
+#   DEHECHO_API_URL  URL raiz de la API vista por el frontend (por defecto http://api:8000)
+
+name: dehecho
+
+services:
+  api:
+    build:
+      context: ../DeHecho
+    image: dehecho-api:latest
+    environment:
+      PORT: "8000"
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+    image: dehecho-web:latest
+    environment:
+      DEHECHO_API_URL: ${DEHECHO_API_URL:-http://api:8000}
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped

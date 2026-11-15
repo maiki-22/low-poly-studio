@@ -1,0 +1,29 @@
+# Dependencias y artefactos de build (se regeneran dentro de la imagen).
+node_modules
+.next
+out
+build
+
+# Control de versiones.
+.git
+.gitignore
+
+# Variables de entorno: no enviar secretos al contexto de build.
+.env
+.env.*
+!.env.example
+
+# Documentacion y material fuente que la app no usa.
+docs
+assets
+*.md
+AGENTS.md
+next-env.d.ts
+*.tsbuildinfo
+
+# Archivos de Docker (no se necesitan dentro de la imagen).
+Dockerfile
+Dockerfile.*
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml

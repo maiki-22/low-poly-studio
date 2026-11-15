@@ -60,6 +60,29 @@ Con Node.js 24, verificar además la carga de geometrías, la selección de las
 node --test scripts/verify-terrain.mjs
 ```
 
+## Despliegue con Docker
+
+El stack completo (API FastAPI + frontend Next.js) se levanta con Docker Compose:
+
+```sh
+docker compose up --build -d
+```
+
+El frontend queda en http://localhost:3000. La API se construye desde el
+repositorio hermano `../DeHecho` (que ya trae su propio `Dockerfile`) y no se
+publica al host: el frontend la consume por la red interna de Compose.
+
+Variables opcionales, en un `.env` junto al `docker-compose.yml`:
+
+| Variable | Por defecto | Uso |
+| --- | --- | --- |
+| `WEB_PORT` | `3000` | Puerto del host para el frontend. |
+| `DEHECHO_API_URL` | `http://api:8000` | URL raíz de la API vista por el frontend. |
+
+El `Dockerfile` usa `output: "standalone"` (definido en `next.config.ts`) y una
+imagen final mínima que solo copia el servidor, los estáticos y `public`. Para
+detener el stack: `docker compose down`.
+
 ## Estructura
 
 - `src/app/`: rutas, layout y estilos globales.
