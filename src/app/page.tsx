@@ -224,7 +224,7 @@ export default function Page() {
             <p className="mt-8 max-w-xl text-base leading-8 text-slate-400 sm:text-lg">
               Explora datos satelitales y variables ambientales para
               identificar tendencias y comprender los cambios que
-              ocurren en nuestro región.
+              ocurren en nuestra región de la araucanía.
             </p>
 
             <p className="mt-5 flex items-center gap-2 text-sm text-slate-500">
