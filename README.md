@@ -1,50 +1,55 @@
 ﻿# DeHecho
 
-Explorador ambiental de La Araucanía: mapa 3D de las 32 comunas, series
-mensuales, tendencias publicadas y contexto regional de incendios.
+An environmental explorer for Chile's La Araucanía Region, featuring an
+interactive 3D map of all 32 municipalities, monthly time series, published
+trends, and regional wildfire context.
 
-## Conectar los datos
+**API repository:** [DeHecho API](https://github.com/eziocard/DeHecho).
 
-Iniciar la API de `../../back/DeHecho` según su README, normalmente en el
-puerto 8000. El frontend funciona con la API real: no sustituye errores por
-datos de demostración.
+## Data Connection
 
-La conexión usa por defecto `http://127.0.0.1:8000`. Para cambiarla, copiar
-`.env.example` a `.env.local`, ajustar `DEHECHO_API_URL` a la URL raíz del
-backend y reiniciar Next.js. Es una variable del servidor, sin prefijo
-`NEXT_PUBLIC_`. El navegador consulta `/api/dehecho/*` en su propio origen;
-el backend no necesita habilitar CORS para esta conexión.
+Start the API in `../../back/DeHecho` according to its README, typically on
+port 8000. The frontend uses the live API and does not replace failed requests
+with demonstration data.
 
-La portada está en `/` y el explorador ambiental en `/mapa`.
-La ficha del explorador carga humedad relativa regional al abrir. Seleccionar una comuna
-en el mapa, con el teclado o mediante el selector actualiza la serie y la
-tendencia. Los botones de rango solo cambian la ventana visible del gráfico.
-La comparación añade la serie regional; las asociaciones de incendios
-permanecen regionales. El gráfico admite ratón, tacto, teclado y tabla.
+The default API URL is `http://127.0.0.1:8000`. To change it, copy
+`.env.example` to `.env.local`, set `DEHECHO_API_URL` to the backend's root URL,
+and restart Next.js. This is a server-side environment variable and does not
+use the `NEXT_PUBLIC_` prefix. The browser requests `/api/dehecho/*` from its
+own origin, so the backend does not need to enable CORS for this connection.
 
-Arquitectura y criterios de extensión en
+The landing page is available at `/`, and the environmental explorer at `/mapa`.
+The explorer's information panel initially loads regional relative humidity.
+Selecting a municipality on the map, with the keyboard, or through the selector
+updates the time series and trend. The range buttons only change the chart's
+visible time window. Comparison mode adds the regional series; wildfire
+associations remain regional. The chart supports mouse, touch, and keyboard
+interaction, as well as a tabular view.
+
+For architecture and extension guidelines, see
 [`docs/arquitectura-frontend.md`](docs/arquitectura-frontend.md).
 
-## Stack
+## Technology Stack
 
-- Next.js con App Router y TypeScript.
-- Tailwind CSS para la interfaz.
-- Three.js, React Three Fiber y Drei para la escena 3D.
-- ESLint para revisar el código.
+- Next.js with App Router and TypeScript.
+- Tailwind CSS for the user interface.
+- Three.js, React Three Fiber, and Drei for the 3D scene.
+- ESLint for code linting.
 
-## Desarrollo
+## Development
 
 ```sh
 pnpm install
 pnpm dev
 ```
 
-Abrir http://localhost:3000.
+Open http://localhost:3000.
 
-Usar el mismo gestor al instalar dependencias y reiniciar el servidor después
-de cambiar la instalación. También se conserva `package-lock.json` para npm.
+Use the same package manager consistently when installing dependencies, and
+restart the server after making changes to the installation. A
+`package-lock.json` file is also retained for npm.
 
-## Validación
+## Validation
 
 ```sh
 pnpm lint
@@ -53,76 +58,80 @@ pnpm test
 pnpm build
 ```
 
-Con Node.js 24, verificar además la carga de geometrías, la selección de las
-32 comunas y las transiciones con su decoración:
+With Node.js 24, also verify geometry loading, selection of all 32
+municipalities, and transitions involving their decorative elements:
 
 ```sh
 node --test scripts/verify-terrain.mjs
 ```
 
-## Despliegue con Docker
+## Docker Deployment
 
-El stack completo (API FastAPI + frontend Next.js) se levanta con Docker Compose:
+Start the complete stack (FastAPI backend and Next.js frontend) with Docker Compose:
 
 ```sh
 docker compose up --build -d
 ```
 
-El frontend queda en http://localhost:3000. La API se construye desde el
-repositorio hermano `../DeHecho` (que ya trae su propio `Dockerfile`) y no se
-publica al host: el frontend la consume por la red interna de Compose.
+The frontend is available at http://localhost:3000. The API is built from the
+sibling repository `../DeHecho`, which includes its own `Dockerfile`. The API
+is not exposed to the host; the frontend accesses it through Compose's
+internal network.
 
-Variables opcionales, en un `.env` junto al `docker-compose.yml`:
+Optional variables can be defined in a `.env` file alongside `docker-compose.yml`:
 
-| Variable | Por defecto | Uso |
+| Variable | Default | Purpose |
 | --- | --- | --- |
-| `WEB_PORT` | `3000` | Puerto del host para el frontend. |
-| `DEHECHO_API_URL` | `http://api:8000` | URL raíz de la API vista por el frontend. |
+| `WEB_PORT` | `3000` | Host port for the frontend. |
+| `DEHECHO_API_URL` | `http://api:8000` | API root URL as accessed by the frontend. |
 
-El `Dockerfile` usa `output: "standalone"` (definido en `next.config.ts`) y una
-imagen final mínima que solo copia el servidor, los estáticos y `public`. Para
-detener el stack: `docker compose down`.
+The `Dockerfile` uses `output: "standalone"`, configured in `next.config.ts`,
+and a minimal final image containing only the server, static assets, and
+`public` directory. To stop the stack, run `docker compose down`.
 
-## Estructura
+## Project Structure
 
-- `src/app/`: rutas, layout y estilos globales.
-- `public/models/`: modelos GLB/glTF y sus recursos públicos.
-- `@/*`: alias para importar desde `src/`.
+- `src/app/`: routes, layout, and global styles.
+- `public/models/`: GLB/glTF models and their public resources.
+- `@/*`: import alias for `src/`.
 
-El visor ocupa toda la pantalla con una cámara fija en perspectiva. Las 32
-comunas se pueden seleccionar por clic o con las flechas del teclado; Escape
-o un clic en el fondo limpia la selección.
+The viewer fills the screen and uses a fixed perspective camera. All 32
+municipalities can be selected by clicking or using the arrow keys. Pressing
+Escape or clicking the background clears the selection.
 
-`public/models/araucania-decorada-v03.glb` incorpora las 37 decoraciones del
-archivo local `Araucania_Terreno_Decorado_Web_v03.glb`. Se conserva su distribución
-simbólica, apoyada en el relieve y vinculada a cada comuna mediante `comunaCut`.
-La comuna seleccionada se eleva junto con su decoración mediante una transición
-suave; se respeta la preferencia de movimiento reducido del sistema.
+`public/models/araucania-decorada-v03.glb` includes all 37 decorative elements
+from the local file `Araucania_Terreno_Decorado_Web_v03.glb`. Their symbolic
+distribution is preserved, with each element positioned on the terrain and
+linked to its municipality through `comunaCut`. The selected municipality
+rises together with its decorative elements in a smooth transition that
+respects the system's reduced-motion preference.
 
-Los laterales y la base de cada comuna se reconstruyen a partir del perímetro
-del modelo. La base permanece fija durante la elevación para cerrar los huecos
-que dejaban las paredes internas eliminadas en la optimización del GLB.
+Each municipality's side walls and base are reconstructed from the model's
+perimeter. The base remains fixed during elevation to close gaps left by
+internal walls removed during GLB optimization.
 
-La preparación del modelo y las transiciones están en
-`src/components/map/terrain-model.ts`; la escena cliente en `map-scene.tsx`.
+Model preparation and transitions are implemented in
+`src/components/map/terrain-model.ts`; the client-side scene is implemented
+in `map-scene.tsx`.
 
-El indicador de carga se monta fuera de Canvas para evitar raíces DOM anidadas
-durante Suspense y los remontajes de desarrollo. Las sombras usan PCFShadowMap.
+The loading indicator is mounted outside Canvas to avoid nested DOM roots
+during Suspense and development remounts. Shadows use PCFShadowMap.
 
-Los overrides de minimatch en `package.json` y `pnpm-workspace.yaml` corrigen
-GHSA-g3hv-75wg-m249 en las dependencias de ESLint. Revisarlos cuando
-typescript-eslint adopte una versión corregida de forma nativa.
+The minimatch overrides in `package.json` and `pnpm-workspace.yaml` address
+GHSA-g3hv-75wg-m249 in ESLint's dependencies. Review these overrides once
+typescript-eslint adopts a patched version directly.
 
-Los archivos de `public/` se sirven públicamente: reservar esta carpeta para
-assets que puedan ser accesibles por URL.
+Files in `public/` are publicly served. Reserve this directory for assets
+that may be accessed by URL.
 
-## Indicador de incendio animado
+## Animated Wildfire Indicator
 
-El fuego creado en Blockbench está disponible en
-`/models/indicador-incendio-v01.glb`, con el clip `incendio_loop` de 1,6 segundos.
-Incluye tres llamas y dos brasas, con 308 triángulos y un peso de 19.168 bytes.
+The fire model created in Blockbench is available at
+`/models/indicador-incendio-v01.glb`, with the 1.6-second `incendio_loop`
+animation clip. It contains three flames and two embers, with 308 triangles
+and a file size of 19,168 bytes.
 
-El editable `.bbmodel`, las vistas previas, los datos fuente y el ayudante de
-Three.js están en [`assets/indicador-incendio-v01/`](assets/indicador-incendio-v01/LEEME.md).
-El modelo queda disponible como recurso para el front; todavía no se coloca
-ningún indicador en el mapa.
+The editable `.bbmodel` file, previews, source data, and Three.js helper are
+available in [`assets/indicador-incendio-v01/`](assets/indicador-incendio-v01/LEEME.md).
+The model is available as a frontend asset; no indicators are currently
+placed on the map.
