@@ -12,6 +12,7 @@ import { MapViewport } from "./map-viewport";
 import { EnvironmentalPanel } from "@/features/environment/components/environmental-panel";
 import { Icon } from "@/components/ui/icon";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { EnvironmentalTimeline } from "@/features/environment/components/environmental-timeline";
 
 export default function MapExplorer() {
   const navigation = useExplorerNavigation();
@@ -64,24 +65,31 @@ export default function MapExplorer() {
         </span>
       </Link>
       </header>
-      <div className="territory-controls">
-        <span className="control-label">Territorio</span>
-        <TerritoryPicker
-          value={selectedId ?? "09"}
-          onChange={(id) => setSelectedId(id === "09" ? null : id)}
+      <div className="territory-tools">
+        <div className="territory-controls">
+          <span className="control-label">Territorio</span>
+          <TerritoryPicker
+            value={selectedId ?? "09"}
+            onChange={(id) => setSelectedId(id === "09" ? null : id)}
+          />
+          <span className="control-period">2014–2023</span>
+          {selectedId && (
+            <button
+              type="button"
+              aria-label="Volver a la región"
+              onClick={() => {
+                setSelectedId(null);
+              }}
+            >
+              <Icon name="close" />
+            </button>
+          )}
+        </div>
+        <EnvironmentalTimeline
+          key={`${navigation.territoryId}:${navigation.variable}`}
+          territoryId={navigation.territoryId}
+          variable={navigation.variable}
         />
-        <span className="control-period">2014–2023</span>
-        {selectedId && (
-          <button
-            type="button"
-            aria-label="Volver a la región"
-            onClick={() => {
-              setSelectedId(null);
-            }}
-          >
-            <Icon name="close" />
-          </button>
-        )}
       </div>
       <EnvironmentalPanel
         territoryView={
