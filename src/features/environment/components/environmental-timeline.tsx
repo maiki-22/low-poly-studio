@@ -13,9 +13,11 @@ import {
 export function EnvironmentalTimeline({
   territoryId,
   variable,
+  onMonthChange,
 }: {
   territoryId: string;
   variable: VariableId;
+  onMonthChange?: (month: string | null) => void;
 }) {
   const id = useId();
   const [index, setIndex] = useState(0);
@@ -39,6 +41,9 @@ export function EnvironmentalTimeline({
   const value = point?.value == null
     ? "Sin datos"
     : `${formatNumber(point.value)} ${series?.unit}`;
+
+  const month = point?.start ?? null;
+  useEffect(() => { onMonthChange?.(month); }, [month, onMonthChange]);
 
   useEffect(() => {
     if (!playing || !points.length) return;

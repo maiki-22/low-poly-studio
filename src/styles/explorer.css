@@ -151,9 +151,59 @@
   color: var(--muted);
   font-size: 11px;
 }
+.timeline-mode {
+  display: flex;
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+  background: var(--surface);
+}
+.map-timeline { display: grid; grid-column: 1 / -1; gap: 8px; min-width: 0; }
+.timeline-mode button {
+  flex: 1;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+}
+.timeline-mode button[aria-pressed="true"] {
+  background: var(--forest);
+  color: white;
+}
+.fire-timeline .timeline-heading output[data-has-value] { color: #a34425; }
+.fire-timeline input { accent-color: #ad4d2d; }
+.fire-timeline-note { margin: 10px 0 0; color: var(--muted); font-size: 11px; }
+.fire-minimum-control { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-size: 12px; }
+.fire-minimum-control select { min-height: 36px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-soft); color: var(--foreground); }
+.fire-counts-table { margin-top: 10px; font-size: 11px; }
+.fire-counts-table summary { cursor: pointer; color: var(--forest); }
+.fire-counts-table[open] { max-height: 230px; overflow: auto; }
+.fire-counts-table table { width: 100%; margin-top: 8px; border-collapse: collapse; }
+.fire-counts-table th, .fire-counts-table td { padding: 4px 6px; text-align: left; }
+.fire-counts-table td { text-align: right; }
+.fire-counts-table tr[aria-current] { background: var(--surface-soft); }
+.fire-counts-table button { border: 0; background: transparent; color: var(--forest); text-decoration: underline; }
+.monthly-fire-count { margin: 0; padding: 8px 16px; border-radius: 10px; background: var(--surface); font-size: 11px; color: var(--muted); }
+.fire-map-legend {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+.fire-map-legend summary { cursor: pointer; color: var(--forest); }
+.fire-map-legend > div { display: grid; gap: 6px; margin-top: 10px; }
+.fire-map-legend strong { color: #a34425; font-size: 12px; }
+.fire-map-legend a { color: var(--forest); }
 @media (min-width: 1260px) and (min-height: 850px) {
-  .territory-tools ~ .environmental-panel .data-column {
-    transform: translateY(120px);
+  .environmental-panel .data-column {
+    max-height: calc(100dvh - 128px);
+    overflow-y: auto;
+    pointer-events: auto;
+    scrollbar-width: thin;
   }
 }
 @media (max-width: 759px) {

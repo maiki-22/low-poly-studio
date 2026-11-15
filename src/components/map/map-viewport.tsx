@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { Component, memo, useCallback, useState, type ReactNode } from "react";
 import communes from "@/data/communes.json";
 import type { HoveredCommune } from "./types";
+import type { FireSeason } from "@/features/environment/domain/wildfires";
+import { formatNumber } from "@/features/environment/domain/environment";
 
 const MapScene = dynamic(() => import("./map-scene"), {
   ssr: false,
@@ -39,9 +41,15 @@ class MapErrorBoundary extends Component<
 export const MapViewport = memo(function MapViewport({
   selectedId,
   onSelect,
+  fireSeason,
+  fireMaximum,
+  fireMinimum,
 }: {
   selectedId: string | null;
   onSelect: (id: string | null) => void;
+  fireSeason: FireSeason | null;
+  fireMaximum: number;
+  fireMinimum: number;
 }) {
   const [hoverState, setHoverState] = useState<{
     selectionId: string | null;
@@ -110,6 +118,9 @@ export const MapViewport = memo(function MapViewport({
           hoveredId={hovered?.id ?? null}
           onSelect={select}
           onHover={hover}
+          fireCounts={fireSeason?.counts ?? null}
+          fireMaximum={fireMaximum}
+          fireMinimum={fireMinimum}
         />
       </MapErrorBoundary>
       {hovered && hoveredCommune && (
@@ -120,6 +131,7 @@ export const MapViewport = memo(function MapViewport({
         >
           {hoveredCommune.name}
           <span>{hoveredCommune.province}</span>
+          {fireSeason && <span>{fireSeason.counts[hoveredCommune.id] == null ? "Sin datos" : `${formatNumber(fireSeason.counts[hoveredCommune.id]!, 0)} incendios`} · {fireSeason.id}</span>}
         </div>
       )}
       <p

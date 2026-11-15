@@ -124,6 +124,7 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
   territoryName,
   repository = environmentRepository,
   territoryView,
+  timelineView,
   variable,
   onVariableChange,
   range,
@@ -135,6 +136,7 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
   territoryName: string;
   repository?: EnvironmentRepository;
   territoryView: ReactNode;
+  timelineView?: ReactNode;
   variable: VariableId;
   onVariableChange: (variable: VariableId) => void;
   range: ChartRange;
@@ -204,6 +206,7 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
         </p>
       )}
       <div className="data-column">
+        {timelineView && <div className="map-timeline">{timelineView}</div>}
         <section
           className="trend-tile panel-surface"
           id="datos"

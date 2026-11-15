@@ -8,9 +8,16 @@ trends, and regional wildfire context.
 
 ## Data Connection
 
-Start the API in `../../back/DeHecho` according to its README, typically on
-port 8000. The frontend uses the live API and does not replace failed requests
+Start the DeHecho API according to its README, typically on port 8000.
+The frontend uses the live API and does not replace failed requests
 with demonstration data.
+
+For a local checkout inside this workspace, use `.local/DeHecho` (ignored by
+Git and Docker), create its `.venv` and install the backend dependencies.
+Run `pnpm api` in one terminal and `pnpm dev` in another. `pnpm api` also
+accepts `DEHECHO_BACKEND_DIR` for an existing backend elsewhere.
+The API listens on `http://127.0.0.1:8000`; `pnpm verify:api` verifies the
+connection through Next.js, including real series, trends and wildfire context.
 
 The default API URL is `http://127.0.0.1:8000`. To change it, copy
 `.env.example` to `.env.local`, set `DEHECHO_API_URL` to the backend's root URL,
@@ -133,5 +140,40 @@ and a file size of 19,168 bytes.
 
 The editable `.bbmodel` file, previews, source data, and Three.js helper are
 available in [`assets/indicador-incendio-v01/`](assets/indicador-incendio-v01/LEEME.md).
-The model is available as a frontend asset; no indicators are currently
-placed on the map.
+The explorer opens in **Incendios por temporada** mode. Play or scrub ten
+July–June seasons (2014–2015 through 2023–2024). One animated flame represents
+each municipality reaching the visual minimum: **50 fires per season** by
+default, adjustable to 1, 25, 50, 100 or 150. Municipalities below that minimum
+can still have recorded fires; all original counts and totals remain visible
+in the table and territory summary. Flame scale factors span 0.045–0.245
+with an exponent of 0.85, normalized between the selected minimum and the
+maximum across all seasons. This wider size range emphasizes differences while
+keeping the scale consistent over time. Markers grow/shrink when the counts
+change, follow the selected municipality's elevation, share cached GLB
+geometry/materials and let pointer events reach the terrain. Reduced-motion
+preferences freeze the flame animation and remove growth transitions.
+
+These are municipal aggregates at symbolic positions, not ignition coordinates
+or live incidents. Exact counts are available in the territory timeline,
+municipal hover labels and the season table. Zero and missing observations do
+not create markers; missing data remain distinct from zero. **Clima mensual**
+retains the environmental timeline and adds the observed regional fire count
+for its calendar month; regional counts are never distributed among communes.
+
+The upstream API currently has no wildfire-count endpoint. `/api/incendios`
+serves a separate, committed snapshot in `src/data/wildfires.json`, imported
+from the API repository's actual `data/conaf/conaf.csv` and `conaf_comuna.csv`.
+It includes the source commit and SHA-256 hashes, 120 regional months and
+320 municipality-season observations. It is not substituted for failed live
+environmental requests and is not refreshed automatically. To update it from
+a reviewed backend checkout, run:
+
+```sh
+pnpm data:conaf .local/DeHecho
+```
+
+The importer matches municipality names to CUT codes (including CHOL CHOL),
+resolves January–June to the season's second calendar year, and verifies
+coverage, duplicate keys, integer counts and regional/municipal totals.
+Restart Next.js after an import. This adapter can be replaced when the backend
+publishes the count series through its API.

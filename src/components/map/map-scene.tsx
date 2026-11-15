@@ -31,6 +31,7 @@ import {
   configureTerrainRenderer,
   updateTerrainShadows,
 } from "./terrain-renderer";
+import { WildfireLayer } from "./wildfire-layer";
 
 const MODEL_URL = "/models/araucania-decorada-v03.glb";
 type SceneProps = {
@@ -38,6 +39,9 @@ type SceneProps = {
   hoveredId: string | null;
   onSelect: (id: string | null) => void;
   onHover: (hovered: HoveredCommune | null) => void;
+  fireCounts: Record<string, number | null> | null;
+  fireMaximum: number;
+  fireMinimum: number;
 };
 
 // Keep a fixed perspective with a closer framing across viewport sizes.
@@ -57,6 +61,9 @@ function Terrain({
   onSelect,
   onHover,
   onReady,
+  fireCounts,
+  fireMaximum,
+  fireMinimum,
 }: SceneProps & { onReady: () => void }) {
   const { scene } = useGLTF(MODEL_URL);
   const { invalidate, gl } = useThree();
@@ -144,6 +151,9 @@ function Terrain({
       >
         <primitive object={terrain.root} />
       </group>
+      {fireCounts && <Suspense fallback={null}>
+        <WildfireLayer terrain={terrain} counts={fireCounts} maximum={fireMaximum} minimum={fireMinimum} />
+      </Suspense>}
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, terrain.bounds.min.y - 0.025, 0]}

@@ -1,5 +1,6 @@
 # Dependencias y artefactos de build (se regeneran dentro de la imagen).
 node_modules
+.local
 .next
 out
 build

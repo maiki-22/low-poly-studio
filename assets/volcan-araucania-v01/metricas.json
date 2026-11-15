@@ -1,0 +1,49 @@
+{
+  "file": "/models/volcan-araucania-v01.glb",
+  "bytes": 31208,
+  "brotliBytes": 8727,
+  "gzipBytes": 10842,
+  "triangles": 356,
+  "vertices": 992,
+  "meshes": 1,
+  "primitives": 1,
+  "materials": 1,
+  "textures": 0,
+  "animations": 0,
+  "externalResources": 0,
+  "extensionsRequired": [],
+  "bounds": {
+    "min": [
+      -5.2430291175842285,
+      0,
+      -5.112260818481445
+    ],
+    "max": [
+      5.433750152587891,
+      5.152976989746094,
+      5.09984016418457
+    ]
+  },
+  "parts": [
+    {
+      "name": "01 · Falda de bosque",
+      "triangles": 48
+    },
+    {
+      "name": "02 · Laderas de roca volcánica",
+      "triangles": 64
+    },
+    {
+      "name": "03 · Nieve de cumbre",
+      "triangles": 64
+    },
+    {
+      "name": "04 · Cráter abierto",
+      "triangles": 80
+    },
+    {
+      "name": "05 · Rocas de la falda",
+      "triangles": 100
+    }
+  ]
+}

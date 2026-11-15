@@ -1,5 +1,12 @@
 # DeHecho: recorrido del usuario y datos disponibles
 
+Actualización de integración, 15 de noviembre de 2026: el frontend incorpora
+una copia trazable de los conteos CONAF mediante `/api/incendios`, independiente
+del proxy ambiental. La reproducción del mapa usa los totales comunales por
+temporada julio–junio y posiciones simbólicas; la vista mensual muestra solo
+el total regional. El backend todavía no publica estos conteos en sus rutas.
+El origen, las limitaciones y la actualización se documentan en el README.
+
 Revisión del 14 de noviembre de 2026, con el código y las fuentes locales actuales.
 La propuesta usa lo que devuelve la API; los análisis y descargas del otro chat
 pueden ampliar el recorrido cuando se incorporen a su contrato público.

@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "loader": "Three.js GLTFLoader (project dependency)",
+  "triangles": 356,
+  "vertices": 992,
+  "meshes": 1,
+  "materials": 1,
+  "textures": 0,
+  "bounds": {
+    "min": [
+      -5.2430291175842285,
+      0,
+      -5.112260818481445
+    ],
+    "max": [
+      5.433750152587891,
+      5.152976989746094,
+      5.09984016418457
+    ]
+  },
+  "normalsUnitLength": true,
+  "closedManifold": true,
+  "consistentWinding": true,
+  "craterFloorHeight": 4.019999981238619,
+  "undersideClosed": true,
+  "nativeGeometryMatches": true,
+  "nativeCoordinateTolerance": 0.00001,
+  "compressedFilesRoundTrip": true
+}

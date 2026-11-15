@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { TerritoryPicker } from "./territory-picker";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useExplorerNavigation } from "@/features/environment/application/use-explorer-navigation";
 import type { VariableId } from "@/features/environment/domain/environment";
 import type { ChartRange } from "@/features/environment/application/chart-data";
@@ -13,9 +13,22 @@ import { EnvironmentalPanel } from "@/features/environment/components/environmen
 import { Icon } from "@/components/ui/icon";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { EnvironmentalTimeline } from "@/features/environment/components/environmental-timeline";
+import { FireTimeline } from "@/features/environment/components/fire-timeline";
+import { useWildfires } from "@/features/environment/application/use-wildfires";
+import { formatNumber } from "@/features/environment/domain/environment";
+import { DEFAULT_FIRE_MINIMUM } from "@/features/environment/application/wildfire-display";
 
 export default function MapExplorer() {
   const navigation = useExplorerNavigation();
+  const [timeline, setTimeline] = useState<"environment" | "fires">("fires");
+  const [seasonIndex, setSeasonIndex] = useState(0);
+  const [fireMinimum, setFireMinimum] = useState(DEFAULT_FIRE_MINIMUM);
+  const [month, setMonth] = useState<string | null>(null);
+  const wildfires = useWildfires();
+  const fireData = wildfires.status === "ready" ? wildfires.data : null;
+  const season = fireData?.seasons[seasonIndex] ?? null;
+  const maximum = fireData ? Math.max(0, ...fireData.seasons.flatMap((row) => Object.values(row.counts).map((count) => count ?? 0))) : 0;
+  const monthlyFires = fireData?.months.find((point) => point.start === month);
   const { update } = navigation;
   const selectedId =
     navigation.territoryId === "09" ? null : navigation.territoryId;
@@ -72,7 +85,7 @@ export default function MapExplorer() {
             value={selectedId ?? "09"}
             onChange={(id) => setSelectedId(id === "09" ? null : id)}
           />
-          <span className="control-period">2014–2023</span>
+          <span className="control-period">{timeline === "fires" ? "2014–2024" : "2014–2023"}</span>
           {selectedId && (
             <button
               type="button"
@@ -85,19 +98,53 @@ export default function MapExplorer() {
             </button>
           )}
         </div>
-        <EnvironmentalTimeline
-          key={`${navigation.territoryId}:${navigation.variable}`}
-          territoryId={navigation.territoryId}
-          variable={navigation.variable}
-        />
       </div>
       <EnvironmentalPanel
+        timelineView={<>
+        <div className="timeline-mode" role="group" aria-label="Contenido de la línea de tiempo">
+          <button type="button" aria-pressed={timeline === "fires"} onClick={() => setTimeline("fires")}>Incendios por temporada</button>
+          <button type="button" aria-pressed={timeline === "environment"} onClick={() => setTimeline("environment")}>Clima mensual</button>
+        </div>
+        {timeline === "environment" ? <>
+          <EnvironmentalTimeline
+            key={`${navigation.territoryId}:${navigation.variable}`}
+            territoryId={navigation.territoryId}
+            variable={navigation.variable}
+            onMonthChange={setMonth}
+          />
+          {fireData && <p className="monthly-fire-count">
+            {monthlyFires?.value != null
+              ? `${formatNumber(monthlyFires.value, 0)} incendios en la región este mes`
+              : "Sin conteo regional de incendios para este mes"}
+          </p>}
+        </> : fireData ? (
+          <FireTimeline data={fireData} index={seasonIndex} onChange={setSeasonIndex} territoryId={navigation.territoryId}
+            minimum={fireMinimum} onMinimumChange={setFireMinimum} />
+        ) : <div className="environmental-timeline" role="status">
+          {wildfires.status === "error" ? <>
+            <p>No pudimos cargar los incendios.</p>
+            <button type="button" onClick={wildfires.retry}>Volver a intentar</button>
+          </> : "Cargando incendios…"}
+        </div>}
+        {timeline === "fires" && season && <details className="fire-map-legend">
+          <summary>Cómo leer las llamas · CONAF</summary>
+          <div>
+            <strong>Incendios · {season.id.replace("-", "–")}</strong>
+            <span>Una llama por comuna con al menos {fireMinimum} incendios en la temporada. Mayor tamaño = más incendios.</span>
+            <span>Una comuna sin llama puede tener registros por debajo de este mínimo visual. Los conteos completos siguen en la tabla.</span>
+            <span>Totales de julio a junio; posiciones simbólicas dentro de cada comuna.</span>
+            <span>Sin coordenadas de los focos ni actividad en tiempo real.</span>
+            <a href={`https://github.com/eziocard/DeHecho/tree/${fireData?.source.revision}/data/conaf`} target="_blank" rel="noreferrer">Fuente: conteos CONAF</a>
+          </div>
+        </details>}
+        </>}
         territoryView={
           <section
             className="territory-section"
             aria-label="Exploración territorial"
           >
-            <MapViewport selectedId={selectedId} onSelect={setSelectedId} />
+            <MapViewport selectedId={selectedId} onSelect={setSelectedId}
+              fireSeason={timeline === "fires" ? season : null} fireMaximum={maximum} fireMinimum={fireMinimum} />
             <div className="map-caption">
               <span className="map-caption-dot" />
               <span>
