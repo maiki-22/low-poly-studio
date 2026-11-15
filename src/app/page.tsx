@@ -14,13 +14,13 @@ import {
   FiWind,
   FiLayers,
   FiBarChart2,
+  FiAlertTriangle,
+  FiCloud,
+  FiCloudRain,
   FiSearch,
   FiDatabase,
 } from "react-icons/fi";
-import { GiEarthAmerica } from "react-icons/gi";
-import { PiEarThin } from "react-icons/pi";
 
-// El globo usa WebGL/window, por eso se carga solo en el cliente
 const EarthGlobe = dynamic(() => import("@/components/EarthGlobe"), {
   ssr: false,
   loading: () => <div className="h-[470px] w-[470px]" />,
@@ -29,30 +29,88 @@ const EarthGlobe = dynamic(() => import("@/components/EarthGlobe"), {
 export default function Page() {
   const router = useRouter();
 
+  const sources = [
+    {
+      name: "MODIS",
+      platform: "Satélites Terra y Aqua",
+      provides: "Temperatura de la superficie y vegetación",
+      resolution: "1 km",
+      since: "2000",
+    },
+    {
+      name: "GPM IMERG",
+      platform: "Constelación Global Precipitation Measurement",
+      provides: "Precipitación",
+      resolution: "10 km",
+      since: "2000",
+    },
+    {
+      name: "MERRA-2",
+      platform: "Reanálisis atmosférico de la NASA",
+      provides: "Humedad, presión y viento",
+      resolution: "50 km",
+      since: "1980",
+    },
+    {
+      name: "Landsat",
+      platform: "Misiones Landsat de NASA y USGS",
+      provides: "Cobertura y cambios en el suelo",
+      resolution: "30 m",
+      since: "1972",
+    },
+  ];
+
   const variables = [
+    {
+      icon: <FiAlertTriangle />,
+      name: "Incendios forestales",
+      description:
+        "Incidencia de incendios en La Araucanía, según las estadísticas de CONAF.",
+      category: "INCENDIOS",
+      unit: "incidencia",
+      wide: true,
+    },
     {
       icon: <FiThermometer />,
       name: "Temperatura",
-      description: "Variaciones térmicas y tendencias de calentamiento.",
+      description: "Temperatura del aire a 2 m y máxima mensual.",
       category: "ATMÓSFERA",
+      unit: "°C",
     },
     {
       icon: <FiDroplet />,
-      name: "Precipitación",
-      description: "Cambios en los patrones de lluvia de la región.",
-      category: "HIDROLOGÍA",
+      name: "Humedad del aire",
+      description: "Humedad relativa, humedad específica y punto de rocío a 2 m.",
+      category: "ATMÓSFERA",
+      unit: "%, kg/kg, °C",
     },
     {
       icon: <FiWind />,
-      name: "Variables atmosféricas",
-      description: "Evolución de las condiciones de la atmósfera.",
+      name: "Viento",
+      description: "Velocidad y componentes este-oeste y norte-sur a 10 m.",
       category: "ATMÓSFERA",
+      unit: "m/s",
     },
     {
       icon: <FiLayers />,
-      name: "Variables terrestres",
-      description: "Cambios en la superficie y los sistemas terrestres.",
+      name: "Suelo",
+      description: "Humedad y temperatura del suelo entre 0 y 10 cm de profundidad.",
       category: "SUPERFICIE",
+      unit: "kg/m², °C",
+    },
+    {
+      icon: <FiCloudRain />,
+      name: "Precipitación",
+      description: "Lluvia acumulada en cada mes.",
+      category: "HIDROLOGÍA",
+      unit: "mm",
+    },
+    {
+      icon: <FiCloud />,
+      name: "Aerosoles",
+      description: "Profundidad óptica a 550 nm: cuántas partículas, como humo, hay en el aire.",
+      category: "ATMÓSFERA",
+      unit: "AOD",
     },
   ];
 
@@ -87,10 +145,10 @@ export default function Page() {
   ];
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#05080D] text-[#E5EAF1]">
+    <main className="min-h-screen bg-[#05080D] text-[#E5EAF1]">
 
       {/* NAVBAR */}
-      <header className="relative z-20 border-b border-white/[0.07] bg-[#05080D]/90">
+      <header className="sticky top-0 z-50 w-full border-b border-white/[0.07] bg-[#05080D]/90 shadow-lg shadow-black/10 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
 
           <button
@@ -98,7 +156,11 @@ export default function Page() {
             className="flex items-center gap-3"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#0033A0]/30 bg-[#0033A0]/10 text-[#6EA3F2]">
-              <GiEarthAmerica size={21} />
+              <img
+                src="/icon.svg"
+                alt="Tierra"
+                className="h-[40px] w-[40px] rounded"
+              />
             </div>
 
             <span className="text-xl font-semibold tracking-tight">
@@ -113,7 +175,7 @@ export default function Page() {
             <a href="#variables" className="transition hover:text-white">
               Variables
             </a>
-            <a href="#funciones" className="transition hover:text-white">
+            <a href="#fuentes" className="transition hover:text-white">
               Fuentes
             </a>
             <a href="#proyecto" className="transition hover:text-white">
@@ -162,7 +224,7 @@ export default function Page() {
             <p className="mt-8 max-w-xl text-base leading-8 text-slate-400 sm:text-lg">
               Explora datos satelitales y variables ambientales para
               identificar tendencias y comprender los cambios que
-              ocurren en nuestro planeta.
+              ocurren en nuestro región.
             </p>
 
             <p className="mt-5 flex items-center gap-2 text-sm text-slate-500">
@@ -302,12 +364,14 @@ export default function Page() {
 
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
-            {variables.map((variable, index) => (
+            {variables.map((variable) => (
               <article
                 key={variable.name}
-                className="group rounded-lg border border-white/[0.08] bg-[#0D1520] p-6 transition duration-300 hover:border-[#6EA3F2]/40 hover:bg-[#111C2A]"
+                className={`group rounded-lg border border-white/[0.08] bg-[#0D1520] p-6 transition duration-300 hover:border-[#6EA3F2]/40 hover:bg-[#111C2A] ${
+                  variable.wide ? "sm:col-span-2 lg:col-span-3" : ""
+                }`}
               >
 
                 <div className="mb-8 flex items-center justify-between">
@@ -317,7 +381,7 @@ export default function Page() {
                   </div>
 
                   <span className="font-mono text-xs text-slate-600">
-                    0{index + 1}
+                    {variable.unit}
                   </span>
 
                 </div>
@@ -334,18 +398,128 @@ export default function Page() {
                   {variable.description}
                 </p>
 
-                <button
-                  onClick={() => router.push("/variables")}
-                  className="mt-7 flex items-center gap-2 text-xs font-medium text-slate-300 transition group-hover:text-[#9DBFF5]"
-                >
-                  Explorar variable
-                  <FiArrowUpRight />
-                </button>
 
               </article>
             ))}
 
           </div>
+        </div>
+      </section>
+
+      {/* FUENTES */}
+      <section
+        id="fuentes"
+        className="border-y border-white/[0.07] bg-[#090E16] px-6 py-24 lg:px-10"
+      >
+        <div className="mx-auto max-w-7xl">
+
+          <div className="mb-14 max-w-2xl">
+
+            <p className="mb-5 flex items-center gap-3 text-[11px] font-medium tracking-[0.2em] text-[#6EA3F2]">
+              <span className="h-px w-7 bg-[#6EA3F2]" />
+              FUENTES DE DATOS
+            </p>
+
+            <h2 className="text-3xl font-medium tracking-tight sm:text-5xl">
+              De dónde vienen los datos.
+            </h2>
+
+            <p className="mt-5 leading-7 text-slate-400">
+              Trabajamos con observaciones de satélites y modelos de la NASA,
+              que consultamos con Giovanni, y con estadísticas oficiales de
+              incendios forestales de CONAF. Cada fuente cubre un periodo y una escala distintos, y eso
+              determina qué tan lejos en el tiempo puedes mirar.
+            </p>
+
+          </div>
+
+          
+
+          {/* Citas: acceso a datos y estadísticas oficiales */}
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+
+            {/* Giovanni (NASA) */}
+            <div className="flex flex-col justify-between gap-6 rounded-lg border border-white/[0.08] bg-[#0D1520] p-6 transition duration-300 hover:border-[#6EA3F2]/40 hover:bg-[#111C2A]">
+
+              <div className="flex items-start gap-4">
+
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#6EA3F2]/20 bg-[#6EA3F2]/[0.07] text-xl text-[#6EA3F2]">
+                  <FiGlobe />
+                </div>
+
+                <div>
+                  <p className="text-xs text-slate-500">
+                    Acceso y análisis de datos de la NASA
+                  </p>
+
+                  <h3 className="mt-1 font-semibold text-white">
+                    Giovanni, NASA GES DISC
+                  </h3>
+
+                  <p className="mt-1 text-sm leading-6 text-slate-400">
+                    Plataforma para explorar y visualizar datos de ciencias
+                    de la Tierra, con productos como MERRA-2.
+                  </p>
+                </div>
+
+              </div>
+
+              <a
+                href="https://giovanni.gsfc.nasa.gov/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 self-start text-sm font-medium text-[#9DBFF5] transition hover:text-white"
+              >
+                Ver fuente
+                <FiArrowUpRight />
+              </a>
+
+            </div>
+
+            {/* CONAF */}
+            <div className="flex flex-col justify-between gap-6 rounded-lg border border-white/[0.08] bg-[#0D1520] p-6 transition duration-300 hover:border-[#6EA3F2]/40 hover:bg-[#111C2A]">
+
+              <div className="flex items-start gap-4">
+
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#6EA3F2]/20 bg-[#6EA3F2]/[0.07] text-xl text-[#6EA3F2]">
+                  <FiDatabase />
+                </div>
+
+                <div>
+                  <p className="text-xs text-slate-500">
+                    Datos de incendios forestales
+                  </p>
+
+                  <h3 className="mt-1 font-semibold text-white">
+                    Corporación Nacional Forestal (CONAF)
+                  </h3>
+
+                  <p className="mt-1 text-sm leading-6 text-slate-400">
+                    Estadísticas históricas: ocurrencia nacional de incendios
+                    forestales, 2014-2023.
+                  </p>
+                </div>
+
+              </div>
+
+              <a
+                href="https://www.conaf.cl/centro-documentals/estadisticas-historicas/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 self-start text-sm font-medium text-[#9DBFF5] transition hover:text-white"
+              >
+                Ver fuente
+                <FiArrowUpRight />
+              </a>
+
+            </div>
+
+          </div>
+
+          <p className="mt-6 text-xs text-slate-600">
+            Las resoluciones son aproximadas y varían según el producto.
+          </p>
+
         </div>
       </section>
 
@@ -386,9 +560,6 @@ export default function Page() {
                     {feature.icon}
                   </div>
 
-                  <span className="font-mono text-sm text-slate-600">
-                    / {feature.number}
-                  </span>
 
                 </div>
 
@@ -400,13 +571,6 @@ export default function Page() {
                   {feature.description}
                 </p>
 
-                <button
-                  onClick={() => router.push(feature.route)}
-                  className="mt-8 flex items-center gap-2 text-sm font-medium text-[#6EA3F2] transition group-hover:gap-4"
-                >
-                  {feature.action}
-                  <FiArrowRight />
-                </button>
 
               </article>
             ))}
@@ -414,8 +578,6 @@ export default function Page() {
           </div>
         </div>
       </section>
-
-      
 
       {/* CTA */}
       <section id="proyecto" className="px-6 py-24 lg:px-10">

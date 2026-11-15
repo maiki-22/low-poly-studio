@@ -13,8 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Low Poly Studio · La Tierra en Bajo Polígono",
+  title: "DeHecho",
   description: "Landing y visor 3D low poly: el planeta Tierra en versión baja poligonización.",
+  icons: {
+    icon: [
+      {
+        url: "icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -23,7 +31,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+
+      <body className="min-h-full flex flex-col">
+        
+        {children}</body>
     </html>
   );
 }
