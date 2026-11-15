@@ -1,13 +1,14 @@
 import {
   Box3, BufferGeometry, Color, DynamicDrawUsage, EdgesGeometry, Float32BufferAttribute, LineBasicMaterial, LineSegments,
-  MathUtils, Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera, Vector3,
+  MathUtils, Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera, Sphere, Vector3,
 } from "three";
+import { TERRAIN_STYLE } from "./terrain-style.ts";
 
 const LIFT_HEIGHT = 0.24;
-const HIGHLIGHT = new Color("#ffe3a0");
-const BASE_OUTLINE = new Color("#355d50");
-const HOVER_OUTLINE = new Color("#e0efcc");
-const SELECTED_OUTLINE = new Color("#fff1be");
+const HIGHLIGHT = new Color(TERRAIN_STYLE.highlight);
+const BASE_OUTLINE = new Color(TERRAIN_STYLE.outline);
+const HOVER_OUTLINE = new Color(TERRAIN_STYLE.hoverOutline);
+const SELECTED_OUTLINE = new Color(TERRAIN_STYLE.selectedOutline);
 
 type Region = {
   id: string;
@@ -143,7 +144,10 @@ function buildCommuneBody(mesh: Mesh, material: MeshStandardMaterial) {
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
   geometry.computeBoundingBox();
-  geometry.computeBoundingSphere();
+  // A single conservative bound covers the entire lift. Ray picking stays valid
+  // without scanning every vertex for a new box and sphere on every frame.
+  geometry.boundingBox!.min.y -= LIFT_HEIGHT / mesh.getWorldScale(new Vector3()).y + 0.00001;
+  geometry.boundingSphere = geometry.boundingBox!.getBoundingSphere(new Sphere());
   const body = new Mesh(geometry, material);
   body.name = `${mesh.name}_body`;
   body.castShadow = true;
@@ -248,6 +252,7 @@ export function animateTerrain(
     if (Math.abs(selection - selected) < 0.0005) selection = selected;
     if (Math.abs(hover - hovered) < 0.0005) hover = hovered;
     moving ||= selection !== selected || hover !== hovered;
+    if (selection === region.selectionProgress && hover === region.hoverProgress) continue;
     if (selection !== region.selectionProgress) {
       // The upper body follows the commune while the bottom stays on the map's
       // original base plane throughout ascent, descent and rapid reselection.
@@ -255,8 +260,6 @@ export function animateTerrain(
       const bottom = region.baseY - region.liftOffset * selection / region.mesh.scale.y;
       for (const vertex of region.anchoredVertices) positions.setY(vertex, bottom);
       positions.needsUpdate = true;
-      region.body.geometry.computeBoundingBox();
-      region.body.geometry.computeBoundingSphere();
     }
     region.selectionProgress = selection;
     region.hoverProgress = hover;

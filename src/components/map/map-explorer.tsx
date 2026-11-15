@@ -1,61 +1,114 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { Component, useState, type ReactNode } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { TerritoryPicker } from "./territory-picker";
+import { useCallback } from "react";
+import { useExplorerNavigation } from "@/features/environment/application/use-explorer-navigation";
+import type { VariableId } from "@/features/environment/domain/environment";
+import type { ChartRange } from "@/features/environment/application/chart-data";
 import communes from "@/data/communes.json";
-import type { HoveredCommune } from "./types";
-
-const MapScene = dynamic(() => import("./map-scene"), {
-  ssr: false,
-  loading: () => <div className="map-loading" role="status">Preparando el mapa…</div>,
-});
-
-class MapErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
-  static getDerivedStateFromError() { return { failed: true }; }
-  render() {
-    if (this.state.failed) return (
-      <div className="map-loading map-error" role="alert">
-        <strong>No pudimos cargar el mapa 3D.</strong>
-        <button onClick={() => window.location.reload()}>Volver a intentar</button>
-      </div>
-    );
-    return this.props.children;
-  }
-}
+import { MapViewport } from "./map-viewport";
+import { EnvironmentalPanel } from "@/features/environment/components/environmental-panel";
+import { Icon } from "@/components/ui/icon";
 
 export default function MapExplorer() {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [hovered, setHovered] = useState<HoveredCommune | null>(null);
+  const navigation = useExplorerNavigation();
+  const { update } = navigation;
+  const selectedId =
+    navigation.territoryId === "09" ? null : navigation.territoryId;
+  const setSelectedId = useCallback(
+    (id: string | null) => update({ territoryId: id ?? "09" }),
+    [update],
+  );
+  const setVariable = useCallback(
+    (variable: VariableId) => update({ variable }),
+    [update],
+  );
+  const setRange = useCallback(
+    (range: ChartRange) => update({ range }),
+    [update],
+  );
+  const setCompare = useCallback(
+    (compare: boolean) => update({ compare }),
+    [update],
+  );
   const selected = communes.find((commune) => commune.id === selectedId);
-  const hoveredCommune = communes.find((commune) => commune.id === hovered?.id);
 
   return (
-    <main className="map-stage" tabIndex={0}
-      aria-label="Mapa interactivo de La Araucanía" aria-describedby="map-instructions"
-      onKeyDown={(event) => {
-        if (event.key === "Escape") { setSelectedId(null); setHovered(null); }
-        if (["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(event.key)) {
-          event.preventDefault();
-          const direction = ["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1;
-          const currentIndex = communes.findIndex((commune) => commune.id === selectedId);
-          const nextIndex = currentIndex < 0 ? (direction > 0 ? 0 : communes.length - 1) : (currentIndex + direction + communes.length) % communes.length;
-          setSelectedId(communes[nextIndex].id);
-          setHovered(null);
+    <main className="explorer">
+      <a className="skip-link" href="#mapa">
+        Saltar al mapa
+      </a>
+      <a className="skip-link" href="#datos">
+        Saltar a los datos
+      </a>
+      <h1 className="sr-only">DeHecho: explorador ambiental de La Araucanía</h1>
+      <header className="explorer-header">
+        <Link className="brand" href="/" aria-label="DeHecho, inicio">
+          <Image
+            className="brand-logo"
+            src="/brand/logo-dehecho-mark.svg"
+            alt=""
+            width={52}
+            height={52}
+            priority
+          />
+          <span>
+            DeHecho<small>Explorador ambiental</small>
+          </span>
+        </Link>
+      </header>
+      <div className="territory-controls">
+        <span className="control-label">Territorio</span>
+        <TerritoryPicker
+          value={selectedId ?? "09"}
+          onChange={(id) => setSelectedId(id === "09" ? null : id)}
+        />
+        <span className="control-period">2014–2023</span>
+        {selectedId && (
+          <button
+            type="button"
+            aria-label="Volver a la región"
+            onClick={() => {
+              setSelectedId(null);
+            }}
+          >
+            <Icon name="close" />
+          </button>
+        )}
+      </div>
+      <EnvironmentalPanel
+        territoryView={
+          <section
+            className="territory-section"
+            aria-label="Exploración territorial"
+          >
+            <MapViewport selectedId={selectedId} onSelect={setSelectedId} />
+            <div className="map-caption">
+              <span className="map-caption-dot" />
+              <span>
+                {selected ? (
+                  <>
+                    <strong>{selected.name}</strong> · {selected.province}
+                  </>
+                ) : (
+                  "Selecciona una de las 32 comunas"
+                )}
+              </span>
+              <span className="map-keyboard-hint">Flechas para explorar</span>
+            </div>
+          </section>
         }
-      }}>
-      <p id="map-instructions" className="sr-only">Haz clic en una comuna para seleccionarla y en el fondo para limpiar la selección. Con el teclado, usa las flechas para seleccionar comunas y Escape para limpiar.</p>
-      <MapErrorBoundary>
-        <MapScene selectedId={selectedId} hoveredId={hovered?.id ?? null} onSelect={setSelectedId} onHover={setHovered} />
-      </MapErrorBoundary>
-      {hovered && hoveredCommune && (
-        <div className="map-tooltip" style={{ left: hovered.x, top: hovered.y }} aria-hidden="true">
-          {hoveredCommune.name}<span>{hoveredCommune.province}</span>
-        </div>
-      )}
-      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-        {selected ? `${selected.name}, provincia de ${selected.province}. Comuna seleccionada.` : "Ninguna comuna seleccionada."}
-      </p>
+        territoryId={selectedId ?? "09"}
+        territoryName={selected?.name ?? "La Araucanía"}
+        variable={navigation.variable}
+        onVariableChange={setVariable}
+        range={navigation.range}
+        onRangeChange={setRange}
+        compare={navigation.compare}
+        onCompareChange={setCompare}
+      />
     </main>
   );
 }

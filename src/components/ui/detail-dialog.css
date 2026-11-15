@@ -1,0 +1,95 @@
+.detail-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(680px, calc(100% - 32px));
+  max-height: calc(100dvh - 48px);
+  padding: 0;
+  border: 0;
+  border-radius: 24px;
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: 0 20px 70px #122d3540;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.detail-dialog::backdrop {
+  background: #173a3359;
+}
+.detail-dialog-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.detail-dialog-header > div {
+  min-width: 0;
+}
+.detail-dialog-header h2 {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.3;
+  font-weight: 600;
+  text-wrap: balance;
+}
+.detail-dialog-header p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.dialog-close {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--surface-soft);
+  color: var(--foreground);
+  font-size: 14px;
+}
+.dialog-close svg {
+  width: 21px;
+  height: 21px;
+}
+.detail-dialog-body {
+  padding: 20px 24px 24px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.detail-dialog-body .table-scroll {
+  max-height: min(60dvh, 560px);
+  margin: 0;
+}
+.detail-dialog .evidence-content {
+  padding: 0;
+}
+@media (max-width: 480px) {
+  .detail-dialog-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--surface);
+    padding: 20px 16px 14px;
+    gap: 10px;
+  }
+  .detail-dialog-header h2 {
+    font-size: 20px;
+  }
+  .detail-dialog-body {
+    padding: 16px;
+  }
+  .dialog-close {
+    gap: 4px;
+    padding-inline: 8px;
+  }
+}

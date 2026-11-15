@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   FiActivity,
@@ -28,37 +29,6 @@ const EarthGlobe = dynamic(() => import("@/components/EarthGlobe"), {
 
 export default function Page() {
   const router = useRouter();
-
-  const sources = [
-    {
-      name: "MODIS",
-      platform: "Satélites Terra y Aqua",
-      provides: "Temperatura de la superficie y vegetación",
-      resolution: "1 km",
-      since: "2000",
-    },
-    {
-      name: "GPM IMERG",
-      platform: "Constelación Global Precipitation Measurement",
-      provides: "Precipitación",
-      resolution: "10 km",
-      since: "2000",
-    },
-    {
-      name: "MERRA-2",
-      platform: "Reanálisis atmosférico de la NASA",
-      provides: "Humedad, presión y viento",
-      resolution: "50 km",
-      since: "1980",
-    },
-    {
-      name: "Landsat",
-      platform: "Misiones Landsat de NASA y USGS",
-      provides: "Cobertura y cambios en el suelo",
-      resolution: "30 m",
-      since: "1972",
-    },
-  ];
 
   const variables = [
     {
@@ -140,7 +110,7 @@ export default function Page() {
       description:
         "Visualiza series temporales, calcula tasas de cambio y evalúa la significancia estadística.",
       action: "Comenzar análisis",
-      route: "/analisis",
+      route: "/mapa#datos",
     },
   ];
 
@@ -156,9 +126,11 @@ export default function Page() {
             className="flex items-center gap-3"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#0033A0]/30 bg-[#0033A0]/10 text-[#6EA3F2]">
-              <img
+              <Image
                 src="/icon.svg"
-                alt="Tierra"
+                alt="DeHecho"
+                width={40}
+                height={40}
                 className="h-[40px] w-[40px] rounded"
               />
             </div>
@@ -243,7 +215,7 @@ export default function Page() {
               </button>
 
               <button
-                onClick={() => router.push("/analisis")}
+                onClick={() => router.push("/mapa#datos")}
                 className="flex items-center justify-center gap-3 rounded-lg border border-white/15 px-7 py-4 font-medium text-slate-300 transition hover:border-[#6EA3F2]/60 hover:text-white"
               >
                 Conocer análisis

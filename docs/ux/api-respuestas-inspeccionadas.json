@@ -1,0 +1,669 @@
+{
+  "captured_at_utc": "2026-11-15T02:15:58.513147+00:00",
+  "method": "FastAPI TestClient; fuentes reales sin modificaciones",
+  "responses": [
+    {
+      "name": "salud",
+      "path": "/health",
+      "params": {},
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    {
+      "name": "catalogo",
+      "path": "/api/catalogo",
+      "params": {},
+      "status": 200,
+      "body": [
+        {
+          "id": "ambiente_region",
+          "label": "Series ambientales regionales",
+          "kind": "series",
+          "available": true,
+          "variables": [
+            "precipitation_mm",
+            "relative_humidity_2m_pct",
+            "soil_moisture_0_10cm_kgm2",
+            "temperature_2m_c"
+          ],
+          "territories": [
+            "09"
+          ],
+          "units": [
+            "%",
+            "kg/m²",
+            "mm/mes",
+            "°C"
+          ]
+        },
+        {
+          "id": "ambiente_comunas",
+          "label": "Series ambientales comunales",
+          "kind": "series",
+          "available": true,
+          "variables": [
+            "precipitation_mm",
+            "relative_humidity_2m_pct",
+            "soil_moisture_0_10cm_kgm2",
+            "temperature_2m_c"
+          ],
+          "territories": [
+            "09101",
+            "09102",
+            "09103",
+            "09104",
+            "09105",
+            "09106",
+            "09107",
+            "09108",
+            "09109",
+            "09110",
+            "09111",
+            "09112",
+            "09113",
+            "09114",
+            "09115",
+            "09116",
+            "09117",
+            "09118",
+            "09119",
+            "09120",
+            "09121",
+            "09201",
+            "09202",
+            "09203",
+            "09204",
+            "09205",
+            "09206",
+            "09207",
+            "09208",
+            "09209",
+            "09210",
+            "09211"
+          ],
+          "units": [
+            "%",
+            "kg/m²",
+            "mm/mes",
+            "°C"
+          ]
+        },
+        {
+          "id": "tendencias_ambientales",
+          "label": "Tendencias ambientales publicadas",
+          "kind": "tendencias",
+          "available": true,
+          "variables": [
+            "precipitation_mm",
+            "relative_humidity_2m_pct",
+            "soil_moisture_0_10cm_kgm2",
+            "temperature_2m_c"
+          ],
+          "territories": [
+            "09",
+            "09101",
+            "09102",
+            "09103",
+            "09104",
+            "09105",
+            "09106",
+            "09107",
+            "09108",
+            "09109",
+            "09110",
+            "09111",
+            "09112",
+            "09113",
+            "09114",
+            "09115",
+            "09116",
+            "09117",
+            "09118",
+            "09119",
+            "09120",
+            "09121",
+            "09201",
+            "09202",
+            "09203",
+            "09204",
+            "09205",
+            "09206",
+            "09207",
+            "09208",
+            "09209",
+            "09210",
+            "09211"
+          ],
+          "units": [
+            "kg/m²/década",
+            "mm/mes por década",
+            "puntos porcentuales/década",
+            "°C/década"
+          ]
+        },
+        {
+          "id": "asociaciones_conaf",
+          "label": "Asociaciones ajustadas con incendios CONAF",
+          "kind": "asociaciones",
+          "available": true,
+          "variables": [
+            "precipitation_mm",
+            "relative_humidity_2m_pct",
+            "soil_moisture_0_10cm_kgm2",
+            "temperature_2m_c"
+          ],
+          "territories": [
+            "09"
+          ],
+          "units": [
+            "kg/m²",
+            "mm/mes",
+            "puntos porcentuales",
+            "°C"
+          ]
+        },
+        {
+          "id": "hallazgos_conaf",
+          "label": "Hallazgos del contexto de incendios CONAF",
+          "kind": "hallazgos",
+          "available": true,
+          "variables": [
+            "precipitation_mm",
+            "relative_humidity_2m_pct",
+            "soil_moisture_0_10cm_kgm2",
+            "temperature_2m_c"
+          ],
+          "territories": [
+            "09"
+          ],
+          "units": []
+        }
+      ]
+    },
+    {
+      "name": "serie_region",
+      "path": "/api/series",
+      "params": {
+        "dataset": "ambiente_region",
+        "territory_id": "09",
+        "variable": "relative_humidity_2m_pct",
+        "start": "2023-01-01",
+        "end": "2023-03-31"
+      },
+      "status": 200,
+      "body": [
+        {
+          "variable": "relative_humidity_2m_pct",
+          "territory_id": "09",
+          "geography_level": "region",
+          "unit": "%",
+          "frequency": "month",
+          "points": [
+            {
+              "start": "2023-01-01",
+              "end": "2023-01-31",
+              "value": 55.576
+            },
+            {
+              "start": "2023-02-01",
+              "end": "2023-02-28",
+              "value": 50.965
+            },
+            {
+              "start": "2023-03-01",
+              "end": "2023-03-31",
+              "value": 61.899
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "serie_temuco",
+      "path": "/api/series",
+      "params": {
+        "dataset": "ambiente_comunas",
+        "territory_id": "09101",
+        "variable": "temperature_2m_c",
+        "start": "2023-01-01",
+        "end": "2023-03-31"
+      },
+      "status": 200,
+      "body": [
+        {
+          "variable": "temperature_2m_c",
+          "territory_id": "09101",
+          "geography_level": "commune",
+          "unit": "°C",
+          "frequency": "month",
+          "points": [
+            {
+              "start": "2023-01-01",
+              "end": "2023-01-31",
+              "value": 18.378
+            },
+            {
+              "start": "2023-02-01",
+              "end": "2023-02-28",
+              "value": 18.901
+            },
+            {
+              "start": "2023-03-01",
+              "end": "2023-03-31",
+              "value": 16.206
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "suelo_saavedra",
+      "path": "/api/series",
+      "params": {
+        "dataset": "ambiente_comunas",
+        "territory_id": "09116",
+        "variable": "soil_moisture_0_10cm_kgm2",
+        "start": "2023-01-01",
+        "end": "2023-01-31"
+      },
+      "status": 200,
+      "body": [
+        {
+          "variable": "soil_moisture_0_10cm_kgm2",
+          "territory_id": "09116",
+          "geography_level": "commune",
+          "unit": "kg/m²",
+          "frequency": "month",
+          "points": [
+            {
+              "start": "2023-01-01",
+              "end": "2023-01-31",
+              "value": null,
+              "missing_reason": "insufficient_coverage"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tendencias_region",
+      "path": "/api/tendencias",
+      "params": {
+        "dataset": "tendencias_ambientales",
+        "territory_id": "09"
+      },
+      "status": 200,
+      "body": [
+        {
+          "variable": "temperature_2m_c",
+          "territory_id": "09",
+          "geography_level": "region",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "°C/década",
+          "slope_per_decade": 0.651969696969704,
+          "ci95_marginal_low": -0.07278836593371496,
+          "ci95_marginal_high": 1.376727759873123,
+          "p_holm": 0.13428061106272343,
+          "status": "uncertain_trend",
+          "n_used": 120
+        },
+        {
+          "variable": "precipitation_mm",
+          "territory_id": "09",
+          "geography_level": "region",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "mm/mes por década",
+          "slope_per_decade": -37.09094949494953,
+          "ci95_marginal_low": -72.03291285727498,
+          "ci95_marginal_high": -2.1489861326240742,
+          "p_holm": 0.11243774651504382,
+          "status": "uncertain_trend",
+          "n_used": 120
+        },
+        {
+          "variable": "relative_humidity_2m_pct",
+          "territory_id": "09",
+          "geography_level": "region",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "puntos porcentuales/década",
+          "slope_per_decade": -9.343242424242398,
+          "ci95_marginal_low": -12.849759369197916,
+          "ci95_marginal_high": -5.83672547928688,
+          "p_holm": 7.064925674684304e-07,
+          "status": "evidence_decreasing",
+          "n_used": 120
+        },
+        {
+          "variable": "soil_moisture_0_10cm_kgm2",
+          "territory_id": "09",
+          "geography_level": "region",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "kg/m²/década",
+          "slope_per_decade": -1.4781262626262515,
+          "ci95_marginal_low": -3.0605925127045412,
+          "ci95_marginal_high": 0.10433998745203832,
+          "p_holm": 0.13428061106272343,
+          "status": "uncertain_trend",
+          "n_used": 120
+        }
+      ]
+    },
+    {
+      "name": "tendencias_temuco",
+      "path": "/api/tendencias",
+      "params": {
+        "dataset": "tendencias_ambientales",
+        "territory_id": "09101"
+      },
+      "status": 200,
+      "body": [
+        {
+          "variable": "temperature_2m_c",
+          "territory_id": "09101",
+          "geography_level": "commune",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "°C/década",
+          "slope_per_decade": 0.6954141414141475,
+          "ci95_marginal_low": -0.03246009689946583,
+          "ci95_marginal_high": 1.4232883797277607,
+          "p_holm": 1.0,
+          "status": "uncertain_trend",
+          "n_used": 120
+        },
+        {
+          "variable": "precipitation_mm",
+          "territory_id": "09101",
+          "geography_level": "commune",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "mm/mes por década",
+          "slope_per_decade": -48.798727272727305,
+          "ci95_marginal_low": -79.89044618777375,
+          "ci95_marginal_high": -17.70700835768086,
+          "p_holm": 0.1824134946790392,
+          "status": "uncertain_trend",
+          "n_used": 120
+        },
+        {
+          "variable": "relative_humidity_2m_pct",
+          "territory_id": "09101",
+          "geography_level": "commune",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "puntos porcentuales/década",
+          "slope_per_decade": -10.206126262626228,
+          "ci95_marginal_low": -14.151039102030335,
+          "ci95_marginal_high": -6.26121342322212,
+          "p_holm": 4.517423337033508e-05,
+          "status": "evidence_decreasing",
+          "n_used": 120
+        },
+        {
+          "variable": "soil_moisture_0_10cm_kgm2",
+          "territory_id": "09101",
+          "geography_level": "commune",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "kg/m²/década",
+          "slope_per_decade": -1.1804696969696808,
+          "ci95_marginal_low": -2.5088521910253494,
+          "ci95_marginal_high": 0.1479127970859877,
+          "p_holm": 1.0,
+          "status": "uncertain_trend",
+          "n_used": 120
+        }
+      ]
+    },
+    {
+      "name": "tendencia_suelo_saavedra",
+      "path": "/api/tendencias",
+      "params": {
+        "dataset": "tendencias_ambientales",
+        "territory_id": "09116",
+        "variable": "soil_moisture_0_10cm_kgm2"
+      },
+      "status": 200,
+      "body": [
+        {
+          "variable": "soil_moisture_0_10cm_kgm2",
+          "territory_id": "09116",
+          "geography_level": "commune",
+          "period_start": "2014-01-01",
+          "period_end": "2023-12-31",
+          "unit": "kg/m²/década",
+          "slope_per_decade": null,
+          "ci95_marginal_low": null,
+          "ci95_marginal_high": null,
+          "p_holm": null,
+          "status": "insufficient_coverage",
+          "n_used": 0,
+          "exclusion_reason": "Soil coverage below 80%; values retained in source, excluded from trend."
+        }
+      ]
+    },
+    {
+      "name": "asociaciones",
+      "path": "/api/asociaciones",
+      "params": {
+        "dataset": "asociaciones_conaf"
+      },
+      "status": 200,
+      "body": [
+        {
+          "variable": "temperature_2m_c",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31",
+          "n_used": 114,
+          "ci95_marginal_low": 0.8813908402464335,
+          "ci95_marginal_high": 1.0226033058257757,
+          "p_holm": 0.20773397811936561,
+          "type": "rate_ratio",
+          "rate_ratio": 0.9493751560687488,
+          "increment": 0.8767038125423282,
+          "direction": "increase",
+          "unit": "°C"
+        },
+        {
+          "variable": "precipitation_mm",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31",
+          "n_used": 114,
+          "ci95_marginal_low": 1.4894720660868672,
+          "ci95_marginal_high": 2.0015723663645963,
+          "p_holm": 1.7299048815295282e-12,
+          "type": "rate_ratio",
+          "rate_ratio": 1.7266401269377052,
+          "increment": 49.59582851544603,
+          "direction": "decrease",
+          "unit": "mm/mes"
+        },
+        {
+          "variable": "relative_humidity_2m_pct",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31",
+          "n_used": 114,
+          "ci95_marginal_low": 0.7791530818952791,
+          "ci95_marginal_high": 1.0234825062427402,
+          "p_holm": 0.20773397811936561,
+          "type": "rate_ratio",
+          "rate_ratio": 0.8930003073935279,
+          "increment": 4.505089197145597,
+          "direction": "decrease",
+          "unit": "puntos porcentuales"
+        },
+        {
+          "variable": "soil_moisture_0_10cm_kgm2",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31",
+          "n_used": 114,
+          "ci95_marginal_low": 1.0747155490094717,
+          "ci95_marginal_high": 1.3307989519588501,
+          "p_holm": 0.0030971218774708325,
+          "type": "rate_ratio",
+          "rate_ratio": 1.1959223746864531,
+          "increment": 1.7547979607319992,
+          "direction": "decrease",
+          "unit": "kg/m²"
+        }
+      ]
+    },
+    {
+      "name": "hallazgos",
+      "path": "/api/hallazgos",
+      "params": {
+        "dataset": "hallazgos_conaf"
+      },
+      "status": 200,
+      "body": [
+        {
+          "id": "conaf:heat",
+          "title": "Temperatura más alta: evidencia independiente insuficiente",
+          "summary": "El modelo principal no respalda una asociación independiente tras Holm (p=0.208). Eso no demuestra ausencia de relación. Asociación explicativa regional, no causalidad ni pronóstico.",
+          "variable": "temperature_2m_c",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31"
+        },
+        {
+          "id": "conaf:rain_deficit",
+          "title": "Déficit de lluvia: asociación estable entre las variantes examinadas",
+          "summary": "Un déficit adicional de 49.60 mm/mes en la anomalía mensual se asocia con una razón de tasas de 1.73, condicionado al modelo. Conserva signo y evidencia en todas las variantes examinadas. Asociación explicativa regional, no causalidad ni pronóstico.",
+          "variable": "precipitation_mm",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31"
+        },
+        {
+          "id": "conaf:rh_deficit",
+          "title": "Déficit de humedad relativa: evidencia independiente insuficiente",
+          "summary": "El modelo principal no respalda una asociación independiente tras Holm (p=0.208). Eso no demuestra ausencia de relación. Asociación explicativa regional, no causalidad ni pronóstico.",
+          "variable": "relative_humidity_2m_pct",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31"
+        },
+        {
+          "id": "conaf:soil_deficit",
+          "title": "Suelo: asociación sensible al control temporal",
+          "summary": "Un déficit adicional de 1.75 kg/m² en la anomalía mensual se asocia con una razón de tasas de 1.20, condicionado al modelo. Al controlar cada año por separado pierde evidencia (p Holm=0.828). Asociación explicativa regional, no causalidad ni pronóstico.",
+          "variable": "soil_moisture_0_10cm_kgm2",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31"
+        },
+        {
+          "id": "conaf:monthly_presence",
+          "title": "Presencia de incendios en la muestra regional",
+          "summary": "De 114 meses, 100 tienen incendios registrados y 14 tienen cero. Son conteos regionales mensuales, no ubicaciones de ignición ni superficie quemada.",
+          "territory_id": "09",
+          "period_start": "2014-07-01",
+          "period_end": "2023-12-31"
+        }
+      ]
+    },
+    {
+      "name": "incendios_comuna",
+      "path": "/api/asociaciones",
+      "params": {
+        "dataset": "asociaciones_conaf",
+        "territory_id": "09101"
+      },
+      "status": 422,
+      "body": {
+        "error": {
+          "code": "unknown_selector",
+          "message": "El valor de territory_id no existe en este conjunto."
+        }
+      }
+    },
+    {
+      "name": "fuera_periodo",
+      "path": "/api/series",
+      "params": {
+        "dataset": "ambiente_region",
+        "variable": "temperature_2m_c",
+        "start": "2025-01-01"
+      },
+      "status": 200,
+      "body": []
+    },
+    {
+      "name": "dataset_desconocido",
+      "path": "/api/series",
+      "params": {
+        "dataset": "no_existe"
+      },
+      "status": 404,
+      "body": {
+        "error": {
+          "code": "dataset_not_found",
+          "message": "El conjunto solicitado no existe."
+        }
+      }
+    },
+    {
+      "name": "tendencia_con_fechas",
+      "path": "/api/tendencias",
+      "params": {
+        "dataset": "tendencias_ambientales",
+        "territory_id": "09",
+        "start": "2020-01-01"
+      },
+      "status": 422,
+      "body": {
+        "error": {
+          "code": "invalid_parameters",
+          "message": "Parámetros de consulta no válidos.",
+          "details": [
+            {
+              "loc": [
+                "query",
+                "start"
+              ],
+              "message": "Extra inputs are not permitted",
+              "type": "extra_forbidden"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "statistics": {
+    "ambiente_region": {
+      "series": 4,
+      "points": 480,
+      "nulls": 0,
+      "bytes": 27792
+    },
+    "ambiente_comunas": {
+      "series": 128,
+      "points": 15360,
+      "nulls": 120,
+      "bytes": 894588
+    },
+    "tendencias_ambientales": {
+      "results": 132,
+      "statuses": {
+        "uncertain_trend": 98,
+        "evidence_decreasing": 33,
+        "insufficient_coverage": 1
+      }
+    },
+    "map_codes": {
+      "front_count": 32,
+      "api_count": 32,
+      "identical": true
+    }
+  }
+}

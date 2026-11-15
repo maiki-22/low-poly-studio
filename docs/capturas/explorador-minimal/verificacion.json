@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-15T04:54:20.449Z",
+  "base": "http://localhost:3000/mapa",
+  "checks": [
+    "Región: serie y tendencia reales; mapa 3D cargado",
+    "Temuco: comparación, leyenda, 12 meses y navegación por teclado; tendencia conservada",
+    "Incendios: razón de tasas regional y hallazgo publicados, sin atribución comunal",
+    "Saavedra: suelo sin datos, sin ceros inventados; otras variables disponibles",
+    "La selección por teclado del mapa actualiza la ficha",
+    "Selección rápida: una respuesta retrasada no reemplaza los datos de la comuna actual",
+    "HTTP 503: error visible y reintento recupera la serie sin datos anteriores",
+    "Móvil y tablet: selección y gráfico operativos, sin desbordamiento a 320, 390 y 768 px",
+    "Sin errores JavaScript en escritorio y móvil"
+  ],
+  "errors": []
+}

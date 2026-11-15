@@ -1,8 +1,20 @@
 @import "tailwindcss";
+@import "../styles/explorer.css";
+@import "../components/ui/detail-dialog.css";
+@import "../features/environment/environment.css";
+@import "../components/charts/line-chart/line-chart.css";
+@import "../styles/responsive.css";
 
 :root {
-  --background: #91cbe3;
+  --background: #a9ceda;
   --foreground: #203e42;
+  --surface: #f7faf6;
+  --surface-soft: #e9f0eb;
+  --forest: #276456;
+  --muted: #50635b;
+  --line: #d2ded5;
+  --radius-panel: 30px;
+  --radius-control: 14px;
 }
 
 @theme inline {
@@ -12,31 +24,65 @@
   --font-mono: var(--font-geist-mono);
 }
 
-* { box-sizing: border-box; }
-html, body { margin: 0; width: 100%; min-height: 100%; overflow-x: hidden; }
-body { background: var(--background); color: var(--foreground); font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif; }
-button { font: inherit; cursor: pointer; }
-button:focus-visible { outline: 3px solid #307e82; outline-offset: 4px; }
-
-.map-stage {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100dvh;
-  isolation: isolate;
-  overflow: hidden;
-  background: var(--background);
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    min-width: 320px;
+  }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  button,
+  select,
+  input {
+    font: inherit;
+  }
+  button,
+  select,
+  summary {
+    cursor: pointer;
+  }
+  button {
+    min-height: 44px;
+    touch-action: manipulation;
+    color: inherit;
+  }
+  button:disabled {
+    cursor: default;
+  }
+  a {
+    color: inherit;
+  }
+  button,
+  a,
+  select,
+  summary,
+  input,
+  [tabindex] {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :where(button, a, select, summary, input, [tabindex]):focus-visible {
+    outline: 3px solid #337f85;
+    outline-offset: 4px;
+  }
+  button {
+    transition:
+      background-color 160ms,
+      color 160ms,
+      opacity 160ms;
+  }
+  button:disabled {
+    opacity: 0.5;
+  }
 }
-.map-stage:focus { outline: none; }
-.map-stage:focus-visible { outline: 2px solid #307e82; outline-offset: -2px; }
-.map-stage > div:has(canvas) { position: absolute !important; inset: 0; }
-.map-stage canvas { display: block; touch-action: none; }
-
-.map-tooltip { position: absolute; z-index: 5; transform: translate(-50%, calc(-100% - 18px)); background: #244b47f5; border: 1px solid #ffffff20; border-radius: 9px; color: #fffceb; padding: 10px 14px; box-shadow: 0 8px 25px #244b4720; white-space: nowrap; font-size: 13px; font-weight: 550; pointer-events: none; }
-.map-tooltip span { display: block; margin-top: 3px; font-size: 10px; font-weight: 400; color: #bfd6ca; }
-.map-loading { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px; padding: 28px; text-align: center; color: #41686c; font-size: 14px; }
-.map-error button { border: 1px solid #73928b; border-radius: 8px; padding: 8px 15px; background: #eff7f3; }
-
 
 @theme {
   --animate-orbitar: orbitar 26s linear infinite;
@@ -48,12 +94,5 @@ button:focus-visible { outline: 3px solid #307e82; outline-offset: 4px; }
     to {
       offset-distance: 100%;
     }
-  }
-}
-
-@layer base {
-  :focus-visible {
-    outline: 3px solid var(--color-sky);
-    outline-offset: 3px;
   }
 }

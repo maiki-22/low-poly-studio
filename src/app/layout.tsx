@@ -13,16 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DeHecho",
-  description: "Landing y visor 3D low poly: el planeta Tierra en versión baja poligonización.",
-  icons: {
-    icon: [
-      {
-        url: "icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-  },
+  icons: { icon: "/icon.svg" },
+  title: "DeHecho — Explora La Araucanía",
+  description:
+    "Explora diez años de condiciones ambientales de La Araucanía: series mensuales, tendencias y evidencia por comuna.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -31,10 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-
-      <body className="min-h-full flex flex-col">
-        
-        {children}</body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

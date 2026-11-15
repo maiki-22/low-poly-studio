@@ -9,11 +9,12 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "node --test scripts/verify-terrain.mjs"
+    "test": "node --test scripts/verify-terrain.mjs scripts/verify-environment.mjs scripts/verify-resource-cache.mjs scripts/verify-explorer-navigation.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
+    "@solar-icons/react": "2.6.0",
     "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",

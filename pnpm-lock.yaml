@@ -17,6 +17,9 @@ importers:
       '@react-three/fiber':
         specifier: ^9.8.2
         version: 9.8.2(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(three@0.187.0)
+      '@solar-icons/react':
+        specifier: 2.6.0
+        version: 2.6.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       next:
         specifier: 16.4.6
         version: 16.4.6(@babel/core@7.29.13(supports-color@7.2.0))(@types/node@20.19.43)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -512,6 +515,17 @@ packages:
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
+
+  '@solar-icons/react@2.6.0':
+    resolution: {integrity: sha512-H6rHAoDef+uNsTPOiY3BHEOMrNlB/C7kb1ul1oHN695XRQjYOSDwglYP/RXELu0omXydL+yB7vaNjkHqlEwlig==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      '@types/react': '>= 16.8'
+      react: '>= 16.8'
+      react-dom: '>= 16.8'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   '@swc/helpers@0.5.23':
     resolution: {integrity: sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==}
@@ -2867,6 +2881,13 @@ snapshots:
       - immer
 
   '@rtsao/scc@1.1.0': {}
+
+  '@solar-icons/react@2.6.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+    dependencies:
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+    optionalDependencies:
+      '@types/react': 19.3.0
 
   '@swc/helpers@0.5.23':
     dependencies:

@@ -1,6 +1,29 @@
-﻿# Low Poly Studio
+﻿# DeHecho
 
-Base de una aplicación web para trabajar con modelos 3D low poly.
+Explorador ambiental de La Araucanía: mapa 3D de las 32 comunas, series
+mensuales, tendencias publicadas y contexto regional de incendios.
+
+## Conectar los datos
+
+Iniciar la API de `../../back/DeHecho` según su README, normalmente en el
+puerto 8000. El frontend funciona con la API real: no sustituye errores por
+datos de demostración.
+
+La conexión usa por defecto `http://127.0.0.1:8000`. Para cambiarla, copiar
+`.env.example` a `.env.local`, ajustar `DEHECHO_API_URL` a la URL raíz del
+backend y reiniciar Next.js. Es una variable del servidor, sin prefijo
+`NEXT_PUBLIC_`. El navegador consulta `/api/dehecho/*` en su propio origen;
+el backend no necesita habilitar CORS para esta conexión.
+
+La portada está en `/` y el explorador ambiental en `/mapa`.
+La ficha del explorador carga humedad relativa regional al abrir. Seleccionar una comuna
+en el mapa, con el teclado o mediante el selector actualiza la serie y la
+tendencia. Los botones de rango solo cambian la ventana visible del gráfico.
+La comparación añade la serie regional; las asociaciones de incendios
+permanecen regionales. El gráfico admite ratón, tacto, teclado y tabla.
+
+Arquitectura y criterios de extensión en
+[`docs/arquitectura-frontend.md`](docs/arquitectura-frontend.md).
 
 ## Stack
 
