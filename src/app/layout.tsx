@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Low Poly Studio",
-  description: "Una aplicación para trabajar con modelos 3D low poly.",
+  title: "Low Poly Studio · La Tierra en Bajo Polígono",
+  description: "Landing y visor 3D low poly: el planeta Tierra en versión baja poligonización.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
