@@ -52,11 +52,6 @@
     padding: 8px;
     gap: 8px;
   }
-  .icon-credit {
-    display: inline;
-    grid-column: 1 / -1;
-    margin-top: 0;
-  }
   .data-column {
     grid-column: 2;
     grid-row: 3 / 5;
@@ -172,11 +167,6 @@
   .variable-selector button svg {
     width: 22px;
     height: 22px;
-  }
-  .icon-credit {
-    display: inline;
-    grid-column: 1 / -1;
-    margin-top: 1px;
   }
   .data-column {
     display: contents;

@@ -73,16 +73,6 @@
 .variable-label {
   min-width: 0;
 }
-.icon-credit {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 12px;
-  text-decoration: none;
-  line-height: 1.5;
-}
-.icon-credit:hover {
-  text-decoration: underline;
-}
 .data-column {
   grid-column: 3;
   grid-row: 1 / -1;
@@ -518,9 +508,4 @@
 .evidence-trigger:hover,
 .chart-data-trigger:hover {
   text-decoration: underline;
-}
-.icon-credit {
-  min-height: 24px;
-  display: inline-flex;
-  align-items: center;
 }

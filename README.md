@@ -131,6 +131,23 @@ typescript-eslint adopts a patched version directly.
 Files in `public/` are publicly served. Reserve this directory for assets
 that may be accessed by URL.
 
+## Volcano Landmarks
+
+`/models/volcan-araucania-v01.glb` represents Villarrica, Llaima and Lonquimay
+near their geographic positions, with small inward offsets for composition.
+Their anchors fall on the Pucón, Vilcún and
+Curacautín meshes, respectively, and follow those municipalities' elevation.
+The volcanoes have narrower, taller silhouettes and terrain-fitted lower
+skirts. Their bodies sit above the highest point under each footprint to keep
+the summits visible. They share cached materials, use disposable copies of the
+geometry for ground fitting, cast and receive shadows, and
+allow clicks to reach the terrain. The municipality tooltip names its volcano.
+
+Positions use the SERNAGEOMIN inventory published by the MMA and the original
+terrain's Mercator transformation. Sizes and terrain elevation are symbolic.
+See [sources, coordinates and placement](docs/volcanes-mapa.md). These three
+landmarks are a selected subset of the region's volcanoes.
+
 ## Animated Wildfire Indicator
 
 The fire model created in Blockbench is available at

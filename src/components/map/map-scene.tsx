@@ -32,6 +32,7 @@ import {
   updateTerrainShadows,
 } from "./terrain-renderer";
 import { WildfireLayer } from "./wildfire-layer";
+import { VolcanoLayer } from "./volcano-layer";
 
 const MODEL_URL = "/models/araucania-decorada-v03.glb";
 type SceneProps = {
@@ -151,6 +152,9 @@ function Terrain({
       >
         <primitive object={terrain.root} />
       </group>
+      <Suspense fallback={null}>
+        <VolcanoLayer terrain={terrain} />
+      </Suspense>
       {fireCounts && <Suspense fallback={null}>
         <WildfireLayer terrain={terrain} counts={fireCounts} maximum={fireMaximum} minimum={fireMinimum} />
       </Suspense>}

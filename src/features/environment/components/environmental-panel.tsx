@@ -190,14 +190,6 @@ export const EnvironmentalPanel = memo(function EnvironmentalPanel({
             <span className="variable-label">{VARIABLES[id].label}</span>
           </button>
         ))}
-        <a
-          className="icon-credit"
-          href="https://solar-icons.dev"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Iconos Solar · 480 Design
-        </a>
       </div>
       {territoryView}
       {updating && (

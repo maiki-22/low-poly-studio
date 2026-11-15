@@ -40,7 +40,9 @@ scene.add(volcan);
 
 Para varias copias, compartir geometría y material con `clone(true)` o usar `InstancedMesh`. En el explorador, vincular su posición al movimiento de la comuna correspondiente y mantener la selección restringida al terreno. El objeto exportado tiene `userData.kind === 'volcan_decorativo'`.
 
-El recurso queda preparado para su colocación; no se ha añadido una ubicación al mapa.
+El explorador reutiliza este recurso en las ubicaciones de Villarrica, Llaima y
+Lonquimay. La integración, coordenadas, fuentes y comunas de apoyo están
+documentadas en [`../../docs/volcanes-mapa.md`](../../docs/volcanes-mapa.md).
 
 ## Reproducir y comprobar
 

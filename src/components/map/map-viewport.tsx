@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { Component, memo, useCallback, useState, type ReactNode } from "react";
 import communes from "@/data/communes.json";
+import { VOLCANOES } from "@/data/volcanoes";
 import type { HoveredCommune } from "./types";
 import type { FireSeason } from "@/features/environment/domain/wildfires";
 import { formatNumber } from "@/features/environment/domain/environment";
@@ -59,6 +60,7 @@ export const MapViewport = memo(function MapViewport({
     hoverState?.selectionId === selectedId ? hoverState.point : null;
   const selected = communes.find((commune) => commune.id === selectedId);
   const hoveredCommune = communes.find((commune) => commune.id === hovered?.id);
+  const hoveredVolcano = VOLCANOES.find((volcano) => volcano.anchorCommuneId === hovered?.id);
   const hover = useCallback(
     (point: HoveredCommune | null) =>
       setHoverState(point ? { selectionId: selectedId, point } : null),
@@ -111,6 +113,7 @@ export const MapViewport = memo(function MapViewport({
         Haz clic en una comuna para seleccionarla y en el fondo para limpiar la
         selección. Con el teclado, usa las flechas para seleccionar comunas y
         Escape para limpiar.
+        El mapa incluye representaciones de los volcanes Villarrica, Llaima y Lonquimay.
       </p>
       <MapErrorBoundary>
         <MapScene
@@ -131,6 +134,7 @@ export const MapViewport = memo(function MapViewport({
         >
           {hoveredCommune.name}
           <span>{hoveredCommune.province}</span>
+          {hoveredVolcano && <span>Volcán {hoveredVolcano.name}</span>}
           {fireSeason && <span>{fireSeason.counts[hoveredCommune.id] == null ? "Sin datos" : `${formatNumber(fireSeason.counts[hoveredCommune.id]!, 0)} incendios`} · {fireSeason.id}</span>}
         </div>
       )}
