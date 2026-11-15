@@ -150,9 +150,7 @@ export default function Page() {
             <a href="#fuentes" className="transition hover:text-white">
               Fuentes
             </a>
-            <a href="#proyecto" className="transition hover:text-white">
-              Sobre el Proyecto
-            </a>
+           
           </div>
 
         </nav>
